@@ -1,10 +1,17 @@
 <template>
-  <div class="title">index</div>
-  <p class="bb">打开一刻时光</p>
-  <span class="iconfont icon-aixin1"></span>
+  <div class="wall-index">
+    <!-- 导航条 -->
+    <TopBar></TopBar>
+    <!-- <video src="@/assets/images/qm1.mp4" autoPlay="autoplay" muted="muted" loop="loop" class="bg-video"></video> -->
+    <!-- 路由占位符 -->
+    <router-view></router-view>
+  </div>
 </template>
 
 <script>
+//引入组件
+import TopBar from "@/components/TopBar";
+
 export default {
   name: "Index",
   data() {
@@ -20,15 +27,20 @@ export default {
       });
     },
   },
+  components: {
+    TopBar,
+  },
 };
 </script>
 
 <style lang="less" scoped>
-.title {
-  color: @link-color;
-}
-.icon-aixin1 {
-  font-size: 40px;
-  color: @primary-color;
+.wall-index {
+  .bg-video {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: -99;
+    height: 840px;
+  }
 }
 </style>

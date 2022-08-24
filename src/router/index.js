@@ -4,8 +4,10 @@ const routes = [
   {
     //首页
     path: "/",
+    redirect: "/wall",
     name: "Index",
     component: () => import("../views/Index.vue"),
+    children: [{ path: "/wall", name: "Wall", component: () => import("../views/WallMessage.vue") }],
   },
 ];
 

@@ -12,4 +12,7 @@ export default {
 
 <style lang="less">
 @import url("./assets/fonts/icon/iconfont.css"); //引入全局字体图标
+* {
+  block-size: border-box;
+}
 </style>
