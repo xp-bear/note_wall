@@ -24,6 +24,6 @@ export default {
 
 <style lang="less" scoped>
 .title {
-  color: red;
+  color: @link-color;
 }
 </style>
