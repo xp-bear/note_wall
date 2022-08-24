@@ -10,4 +10,6 @@ export default {
 };
 </script>
 
-<style lang="less"></style>
+<style lang="less">
+@import url("./assets/fonts/icon/iconfont.css"); //引入全局字体图标
+</style>

@@ -1,6 +1,7 @@
 <template>
   <div class="title">index</div>
   <p class="bb">打开一刻时光</p>
+  <span class="iconfont icon-aixin1"></span>
 </template>
 
 <script>
@@ -25,5 +26,9 @@ export default {
 <style lang="less" scoped>
 .title {
   color: @link-color;
+}
+.icon-aixin1 {
+  font-size: 40px;
+  color: @primary-color;
 }
 </style>
