@@ -2,7 +2,8 @@
   <div class="wall-index">
     <!-- 导航条 -->
     <TopBar></TopBar>
-    <!-- <video src="@/assets/images/qm1.mp4" autoPlay="autoplay" muted="muted" loop="loop" class="bg-video"></video> -->
+    <!-- 视频背景 -->
+    <video src="@/assets/images/qm1.mp4" autoPlay="autoplay" muted="muted" loop="loop" class="bg-video"></video>
     <!-- 路由占位符 -->
     <router-view></router-view>
     <!-- 脚部组件 -->

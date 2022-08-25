@@ -11,8 +11,10 @@ export default {
 </script>
 
 <style lang="less">
-@import url("./assets/fonts/icon/iconfont.css"); //引入全局字体图标
 * {
+  margin: 0;
+  padding: 0;
   block-size: border-box;
 }
+@import url("./assets/fonts/icon/iconfont.css"); //引入全局字体图标
 </style>

@@ -1,7 +1,7 @@
 <template>
   <div class="top-bar">
     <div class="logo">
-      <img src="@/assets/images/yksg.svg" alt="" />
+      <img src="@/assets/images/logo.jpg" style="width: 32px" alt="" />
       <p class="logo-name">熊仔留言墙</p>
     </div>
     <div class="menu">
