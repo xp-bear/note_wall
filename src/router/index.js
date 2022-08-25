@@ -7,7 +7,7 @@ const routes = [
     redirect: "/wall",
     name: "Index",
     component: () => import("../views/Index.vue"),
-    children: [{ path: "/wall", name: "Wall", component: () => import("../views/WallMessage.vue") }],
+    children: [{ path: "/wall", name: "WallMessage", component: () => import("../views/WallMessage.vue") }],
   },
 ];
 

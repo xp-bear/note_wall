@@ -5,12 +5,15 @@
     <!-- <video src="@/assets/images/qm1.mp4" autoPlay="autoplay" muted="muted" loop="loop" class="bg-video"></video> -->
     <!-- 路由占位符 -->
     <router-view></router-view>
+    <!-- 脚部组件 -->
+    <FooterBar></FooterBar>
   </div>
 </template>
 
 <script>
 //引入组件
 import TopBar from "@/components/TopBar";
+import FooterBar from "@/components/FooterBar";
 
 export default {
   name: "Index",
@@ -29,6 +32,7 @@ export default {
   },
   components: {
     TopBar,
+    FooterBar,
   },
 };
 </script>

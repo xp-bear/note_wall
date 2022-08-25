@@ -4,7 +4,7 @@
 
 <script>
 export default {
-  name: "",
+  name: "WallMessage",
   data() {
     return {};
   },
@@ -13,7 +13,7 @@ export default {
 
 <style lang="less" scoped>
 .wall-message {
-  height: 2000px;
+  min-height: 700px;
   //   background-color: red;
   //   margin-top: 52px;
 }
