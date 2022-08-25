@@ -50,7 +50,7 @@ export default {
   padding: 22px 199px 0;
   box-sizing: border-box;
   .left {
-    flex: 1.5;
+    flex: 1.3;
     .footer-title {
       display: flex;
       margin-bottom: 22px;
@@ -107,7 +107,8 @@ export default {
     }
   }
   .right {
-    flex: 1;
+    width: 240px;
+    block-size: border-box;
     .right-title {
       display: block;
       height: 22px;
@@ -122,9 +123,12 @@ export default {
     }
     .right-pay {
       display: flex;
+      justify-content: space-between;
       div {
+
         width: 100px;
-        margin-right: 40px;
+        // margin-right: 40px;
+
 
         img {
           width: 100%;
