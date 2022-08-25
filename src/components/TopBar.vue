@@ -5,8 +5,8 @@
       <p class="logo-name">熊仔留言墙</p>
     </div>
     <div class="menu">
-      <Button>留言墙</Button>
-      <Button>照片墙</Button>
+      <Button nom="cprimary" class="menu-message">留言墙</Button>
+      <Button nom="csecondary" class="menu-photo">照片墙</Button>
     </div>
     <div class="user">
       <div class="user-head"></div>
@@ -17,7 +17,7 @@
 <script>
 import Button from "@/components/Button.vue";
 export default {
-  name: "",
+  name: "TopBar",
   data() {
     return {};
   },
@@ -51,6 +51,11 @@ export default {
       color: @gray-1;
       font-weight: 600;
       padding-left: 10px;
+    }
+  }
+  .menu {
+    .menu-message {
+      margin-right: 24px;
     }
   }
   .user {
