@@ -44,7 +44,7 @@ export default {
     dateOne,
   },
   created() {
-    console.log(this.card);
+    // console.log(this.card);
   },
   data() {
     return {

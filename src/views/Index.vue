@@ -22,14 +22,14 @@ export default {
     return {};
   },
   created() {
-    this.getData();
+    // this.getData();
   },
   methods: {
-    getData() {
-      this.axios.get(`http://150.158.21.251:4000/search?keywords=%E6%B5%B7%E9%98%94%E5%A4%A9%E7%A9%BA`).then((res) => {
-        console.log(res.data);
-      });
-    },
+    // getData() {
+    //   this.axios.get(`http://150.158.21.251:4000/search?keywords=%E6%B5%B7%E9%98%94%E5%A4%A9%E7%A9%BA`).then((res) => {
+    //     console.log(res.data);
+    //   });
+    // },
   },
   components: {
     TopBar,

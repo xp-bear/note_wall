@@ -12,15 +12,18 @@
       <NoteCard v-for="(item, index) in note" :key="index" :note="item" class="card-inner" :width="'288px'"></NoteCard>
     </div>
     <!-- 添加卡片按钮 -->
-    <div class="add" :style="{ bottom: addBottom + 'px' }">
+    <div class="add" :style="{ bottom: addBottom + 'px' }" @click="changeModal()">
       <span class="iconfont icon-tianjia"></span>
     </div>
+    <!-- 弹出层模态框 -->
+    <Modal :title="title" @close="changeModal()" :idModal="modal"></Modal>
   </div>
 </template>
 
 <script>
 import { label, wallType } from "@/utils/data";
 import NoteCard from "@/components/NoteCard.vue";
+import Modal from "@/components/Modal.vue";
 import { note } from "../../mock/index";
 export default {
   name: "WallMessage",
@@ -33,6 +36,8 @@ export default {
       note: note.data, //mock数据
       nwidth: 0, //卡片模块宽度
       addBottom: 30, //add按钮bottom的变量
+      title: "写留言", //新建标题
+      modal: false, //模态框的显示与隐藏
     };
   },
   mounted() {
@@ -75,9 +80,22 @@ export default {
         this.addBottom = 30;
       }
     },
+    // //关闭弹窗,子传父的方法
+    // close(e) {
+    //   this.modal = false;
+    // },
+    // //点击添加按钮
+    // addButton() {
+    //   this.modal = true;
+    // },
+    //弹窗的显示与隐藏
+    changeModal() {
+      this.modal = !this.modal;
+    },
   },
   components: {
     NoteCard,
+    Modal,
   },
 };
 </script>

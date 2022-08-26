@@ -15,7 +15,7 @@
       <p class="footer-beian">声明&nbsp;&nbsp;&nbsp;&nbsp;备案/许可证粤ICP备19012866号 &nbsp;&nbsp;&nbsp;&nbsp;网站备案/许可证粤ICP备19012866号</p>
     </div>
     <div class="center">
-      <span class="center-title">链接</span>
+      <span class="center-title">友情链接</span>
       <div class="center-link">
         <a href="#">熊仔音乐</a>&nbsp;&nbsp;&nbsp;&nbsp;
         <a href="#">聊天室</a>
