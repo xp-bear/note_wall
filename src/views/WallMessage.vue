@@ -11,6 +11,10 @@
     <div class="card" :style="{ width: nwidth + 'px' }">
       <NoteCard v-for="(item, index) in note" :key="index" :note="item" class="card-inner" :width="'288px'"></NoteCard>
     </div>
+    <!-- 添加卡片按钮 -->
+    <div class="add" :style="{ bottom: addBottom + 'px' }">
+      <span class="iconfont icon-tianjia"></span>
+    </div>
   </div>
 </template>
 
@@ -28,16 +32,21 @@ export default {
       nlabel: -1, //当前对应的标签
       note: note.data, //mock数据
       nwidth: 0, //卡片模块宽度
+      addBottom: 30, //add按钮bottom的变量
     };
   },
   mounted() {
     this.noteWidth();
     //监听屏幕宽度变化
     window.addEventListener("resize", this.noteWidth);
+    //监听高度滚动
+    window.addEventListener("scroll", this.scrollBottom);
   },
   unmounted() {
     //注销在全局绑定的事件
     window.addEventListener("resize", this.noteWidth);
+    //注销监听高度滚动
+    window.addEventListener("scroll", this.scrollBottom);
   },
   methods: {
     //选择节点,切换label
@@ -49,6 +58,22 @@ export default {
       //页面宽度
       let wWidth = document.body.clientWidth;
       this.nwidth = Math.floor((wWidth - 120) / 300) * 300; //卡片对应的总宽度
+    },
+    //监听页面滚动条的高度变化
+    scrollBottom() {
+      //获取距离顶部的高度
+      let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      //可视化区域高度
+      let clientHeight = document.documentElement.clientHeight;
+      //内容高度
+      let contentHeight = document.documentElement.scrollHeight;
+
+      //做判断,代表我已经滚动到了底部footer与内容之间的距离
+      if (scrollTop + clientHeight + 200 >= contentHeight) {
+        this.addBottom = 30 + scrollTop + clientHeight + 200 - contentHeight;
+      } else {
+        this.addBottom = 30;
+      }
     },
   },
   components: {
@@ -100,6 +125,23 @@ export default {
     margin: 0 auto;
     .card-inner {
       margin: 6px;
+    }
+  }
+  .add {
+    width: 56px;
+    height: 56px;
+    background: #202020;
+    box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.08);
+    border-radius: 28px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    right: 30px;
+    transition: all 0.3s;
+    span {
+      color: #fff;
+      font-size: 24px;
     }
   }
 }
