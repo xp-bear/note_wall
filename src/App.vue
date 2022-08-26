@@ -34,6 +34,7 @@ export default {
   background: rgba(59, 115, 240, 0.1);
 }
 
+
 * {
   margin: 0;
   padding: 0;
