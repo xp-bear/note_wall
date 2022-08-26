@@ -50,6 +50,7 @@ export default {
   font-family: PingFangSC-Regular;
   padding: 22px 199px 0;
   box-sizing: border-box;
+  margin-top: 40px;
   .left {
     // flex: 1.3;
     .footer-title {

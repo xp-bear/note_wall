@@ -1,36 +1,56 @@
 <template>
-  <div class="note-card" :style="{ width: width, background: 'rgba(252, 175, 168,0.3)' }">
+  <div class="note-card" :style="{ width: width, background: cardColor[card.imgurl] }">
     <div cLass="top">
-      <p class="time">2022.07.12</p>
-      <p class="label">熊仔</p>
+      <p class="time">{{ dateOne(card.moment) }}</p>
+      <p class="label">{{ label[card.type][card.label] }}</p>
     </div>
-    <p class="message">很想知道博主的学习方法，因为我自己也在自学，就是学会了某一些东西用法之后，就是不知道什么时候该用什么来解决问题。</p>
+    <p class="message title-menu-min">{{ card.message }}</p>
     <div class="foot">
       <div class="footer-left">
         <div class="icon">
           <span class="iconfont icon-aixin1"></span>
-          <span class="value">3</span>
+          <span class="value">{{ card.like }}</span>
         </div>
         <div class="icon">
           <span class="iconfont icon-liuyan"></span>
-          <span class="value">3</span>
+          <span class="value">{{ card.comment }}</span>
         </div>
       </div>
-      <div class="name">匿名</div>
+      <div class="name">{{ card.name }}</div>
     </div>
   </div>
 </template>
 
 <script>
+import { label, cardColor } from "@/utils/data";
+import { dateOne } from "@/utils/time_format";
 export default {
   name: "NoteCard",
   props: {
     width: {
-      default: "288px",
+      default: "100%",
+    },
+    note: {
+      default: {},
     },
   },
+  computed: {
+    //监听卡片数量变化
+    card() {
+      return this.note;
+    },
+  },
+  methods: {
+    dateOne,
+  },
+  created() {
+    console.log(this.card);
+  },
   data() {
-    return {};
+    return {
+      label, //分类标签
+      cardColor, //卡片背景色
+    };
   },
 };
 </script>
@@ -62,6 +82,8 @@ export default {
     font-size: 14px;
     color: @gray-1;
     letter-spacing: 0.5px;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
   .foot {
     width: 100%;
