@@ -6,11 +6,16 @@
       <p class="label-list" :class="{ label_selected: nlabel == -1 }" @click="selectNode(-1)">全部</p>
       <p class="label-list" :class="{ label_selected: nlabel == index }" v-for="(item, index) in label[id]" :key="index" @click="selectNode(index)">{{ item }}</p>
     </div>
+    <!-- 卡片组件 -->
+    <div class="card">
+      <NoteCard></NoteCard>
+    </div>
   </div>
 </template>
 
 <script>
 import { label, wallType } from "@/utils/data";
+import NoteCard from "@/components/NoteCard.vue";
 export default {
   name: "WallMessage",
   data() {
@@ -21,11 +26,15 @@ export default {
       nlabel: -1, //当前对应的标签
     };
   },
+
   methods: {
     //选择节点
     selectNode(element) {
       this.nlabel = element;
     },
+  },
+  components: {
+    NoteCard,
   },
 };
 </script>
