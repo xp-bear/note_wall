@@ -12,7 +12,7 @@
       <NoteCard v-for="(item, index) in note" :key="index" :note="item" class="card-inner" :width="'288px'"></NoteCard>
     </div>
     <!-- 添加卡片按钮 -->
-    <div class="add" :style="{ bottom: addBottom + 'px' }" @click="changeModal()">
+    <div class="add" :style="{ bottom: addBottom + 'px' }" @click="changeModal()" v-show="!modal">
       <span class="iconfont icon-tianjia"></span>
     </div>
     <!-- 弹出层模态框 -->
@@ -37,7 +37,7 @@ export default {
       nwidth: 0, //卡片模块宽度
       addBottom: 30, //add按钮bottom的变量
       title: "写留言", //新建标题
-      modal: false, //模态框的显示与隐藏
+      modal: true, //模态框的显示与隐藏
     };
   },
   mounted() {
