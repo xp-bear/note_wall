@@ -16,7 +16,10 @@
       <span class="iconfont icon-tianjia"></span>
     </div>
     <!-- 弹出层模态框 -->
-    <Modal :title="title" @close="changeModal()" :idModal="modal"></Modal>
+    <Modal :title="title" @close="changeModal()" :idModal="modal">
+      <!-- 新建卡片组件 -->
+      <NewCard></NewCard>
+    </Modal>
   </div>
 </template>
 
@@ -24,6 +27,7 @@
 import { label, wallType } from "@/utils/data";
 import NoteCard from "@/components/NoteCard.vue";
 import Modal from "@/components/Modal.vue";
+import NewCard from "@/components/NewCard.vue";
 import { note } from "../../mock/index";
 export default {
   name: "WallMessage",
@@ -96,6 +100,7 @@ export default {
   components: {
     NoteCard,
     Modal,
+    NewCard,
   },
 };
 </script>

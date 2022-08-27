@@ -66,6 +66,10 @@ export default {
   padding: 10px 20px;
   box-sizing: border-box;
   position: relative;
+  transition: all 0.3s;
+  &:hover {
+    transform: translateY(-5px);
+  }
   .top {
     display: flex;
     justify-content: space-between;

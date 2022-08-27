@@ -17,3 +17,5 @@ export const label = [
 
 //卡片背景色
 export const cardColor = ["rgba(252,175,162,0.30)", "rgba(255,227,148,0.30)", "rgba(146,230,245,0.30)", "rgba(168,237,138,0.30)", "rgba(202,167,247,0.30)", "rgba(212,212,212,0.30)"];
+
+export const cardListColor = ["rgba(252,175,162)", "rgba(255,227,148)", "rgba(146,230,245)", "rgba(168,237,138)", "rgba(202,167,247)"];
