@@ -54,8 +54,15 @@ function closeModal() {
       font-weight: 600;
     }
     span {
-      font-size: 16px;
+      font-size: 18px;
       padding: 0px 5px; //增加按钮的可选域
+      transform: rotate(0deg);
+      transition: all 0.3s;
+      &:hover {
+        color: red;
+        transform: rotate(180deg);
+        font-weight: 700;
+      }
     }
   }
   .modal-main {
@@ -96,5 +103,4 @@ function closeModal() {
     }
   }
 }
-
 </style>

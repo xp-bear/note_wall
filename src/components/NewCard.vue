@@ -75,7 +75,7 @@ export default {
       box-sizing: border-box;
       padding: 8px;
       background: none;
-      border: 1px solid #000;
+      border: 1px solid #00000060;
       height: 36px;
       line-height: 36px;
       font-size: 15px;

@@ -11,6 +11,35 @@ export default {
 </script>
 
 <style lang="less">
+//脉冲动画
+#animation-plus {
+  -webkit-animation: plus 0.3s 0.2s ease both;
+  -moz-animation: plus 0.3s 0.2s ease both;
+}
+#animation-reduce {
+  -webkit-animation: reduce 1s 0.2s ease both;
+  -moz-animation: reduce 1s 0.2s ease both;
+}
+@-webkit-keyframes plus {
+  0% {
+    transform: scale(1);
+  }
+  100% {
+    transform: scale(1.1);
+  }
+}
+@-moz-keyframes reduce {
+  0% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
 // title-menu-min not卡片的滚动条
 .title-menu-min {
   overflow-x: scroll !important;

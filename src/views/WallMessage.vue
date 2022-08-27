@@ -41,7 +41,7 @@ export default {
       nwidth: 0, //卡片模块宽度
       addBottom: 30, //add按钮bottom的变量
       title: "写留言", //新建标题
-      modal: true, //模态框的显示与隐藏
+      modal: false, //模态框的显示与隐藏
     };
   },
   mounted() {
@@ -50,6 +50,16 @@ export default {
     window.addEventListener("resize", this.noteWidth);
     //监听高度滚动
     window.addEventListener("scroll", this.scrollBottom);
+    // 鼠标悬停按钮添加id 做动画
+    let btn = document.querySelector(".add");
+    // 移入
+    btn.addEventListener("mouseover", function (e) {
+      btn.id = "animation-plus";
+    });
+    // 移出
+    btn.addEventListener("mouseout", function (e) {
+      btn.id = "animation-reduce";
+    });
   },
   unmounted() {
     //注销在全局绑定的事件
