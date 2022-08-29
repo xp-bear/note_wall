@@ -6,6 +6,7 @@
         <p class="modal-name">{{ title }}</p>
         <span class="iconfont icon-guanbi" @click="closeModal()"></span>
       </div>
+      <!-- 模态框内容部分 -->
       <div class="modal-main modal-slider">
         <slot></slot>
       </div>
@@ -20,7 +21,7 @@ const props = defineProps({
     default: "标题",
   },
   idModal: {
-    //模态框的显示与隐藏
+    //模态框的显示与隐藏,默认值是false
     default: false,
   },
 });
@@ -37,6 +38,7 @@ function closeModal() {
   width: 360px;
   height: 100%;
   position: fixed;
+  z-index: 99;
   right: 0;
   top: 52px;
   background: rgba(255, 255, 255, 0.8);

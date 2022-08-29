@@ -18,7 +18,7 @@
     <!-- 弹出层模态框 -->
     <Modal :title="title" @close="changeModal()" :idModal="modal">
       <!-- 新建卡片组件 -->
-      <NewCard></NewCard>
+      <NewCard :id="id" @addClose="addClose"></NewCard>
     </Modal>
   </div>
 </template>
@@ -34,14 +34,14 @@ export default {
   data() {
     return {
       wallType,
-      label,
+      label, //当前的标签
       id: 0, // 留言墙与照片墙的切换id
       nlabel: -1, //当前对应的标签
       note: note.data, //mock数据
       nwidth: 0, //卡片模块宽度
       addBottom: 30, //add按钮bottom的变量
       title: "写留言", //新建标题
-      modal: false, //模态框的显示与隐藏
+      modal: true, //模态框的显示与隐藏
     };
   },
   mounted() {
@@ -105,6 +105,10 @@ export default {
     //弹窗的显示与隐藏
     changeModal() {
       this.modal = !this.modal;
+    },
+    //传入子级,关闭弹窗
+    addClose() {
+      this.modal = false;
     },
   },
   components: {

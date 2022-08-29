@@ -25,6 +25,7 @@ export default {
 .default-button {
   text-align: center;
   border: none;
+  cursor: pointer;
 }
 // size
 .max {
