@@ -95,4 +95,9 @@ export default {
   block-size: border-box;
 }
 @import url("./assets/fonts/icon/iconfont.css"); //引入全局字体图标
+// 自定义字体
+@font-face {
+  font-family: xp;
+  src: url("@/assets/fonts/two.ttf");
+}
 </style>

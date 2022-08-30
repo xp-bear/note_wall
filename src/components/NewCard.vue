@@ -116,9 +116,10 @@ export default {
       padding: 8px;
       box-sizing: border-box;
       font-size: 15px;
+      font-family: "xp";
     }
     .name {
-      font-family: "楷体";
+      font-family: "xp";
       width: 100%;
       box-sizing: border-box;
       padding: 8px;
@@ -160,6 +161,7 @@ export default {
   }
   .responseibility {
     padding-bottom: 212px;
+
     .title {
       font-size: 14px;
       color: #202020;

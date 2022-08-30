@@ -18,7 +18,8 @@
     <!-- 弹出层模态框 -->
     <Modal :title="title" @close="changeModal()" :idModal="modal">
       <!-- 新建卡片组件 -->
-      <NewCard :id="id" @addClose="addClose"></NewCard>
+      <NewCard :id="id" @addClose="addClose" v-show="cardSelected == -1"></NewCard>
+      <CardDetail :card="note[cardSelected]" v-show="cardSelected !== -1"></CardDetail>
     </Modal>
   </div>
 </template>
@@ -28,6 +29,7 @@ import { label, wallType } from "@/utils/data";
 import NoteCard from "@/components/NoteCard.vue";
 import Modal from "@/components/Modal.vue";
 import NewCard from "@/components/NewCard.vue";
+import CardDetail from "@/components/CardDetail.vue";
 import { note } from "../../mock/index";
 export default {
   name: "WallMessage",
@@ -40,8 +42,8 @@ export default {
       note: note.data, //mock数据
       nwidth: 0, //卡片模块宽度
       addBottom: 30, //add按钮bottom的变量
-      title: "写留言", //新建标题
-      modal: false, //模态框的显示与隐藏
+      title: "", //新建标题
+      modal: true, //模态框的显示与隐藏
       cardSelected: 0, //当前选择的卡片
     };
   },
@@ -113,13 +115,26 @@ export default {
     },
     //选择对应的卡片
     selectCad(index) {
-      this.cardSelected = index;
+      if (index != this.cardSelected) {
+        this.cardSelected = index;
+        this.modal = true;
+      } else {
+        this.cardSelected = -1;
+        this.modal = false;
+      }
+      //判断前面模态框开头的标题
+      if (this.cardSelected == -1) {
+        this.title = "写留言";
+      } else {
+        this.title = "";
+      }
     },
   },
   components: {
     NoteCard,
     Modal,
     NewCard,
+    CardDetail,
   },
 };
 </script>

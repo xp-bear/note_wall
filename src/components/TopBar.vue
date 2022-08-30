@@ -59,12 +59,13 @@ export default {
     }
   }
   .user {
-    width: 200px;
+    // width: 200px;
     .user-head {
       border-radius: 50%;
       width: 36px;
       height: 36px;
-      background-image: linear-gradient(to bottom, #373b44, #4286f4);
+      background: linear-gradient(to right, #11998e, #38ef7d);
+      box-shadow: 0px 0px 4px 0px rgb(0 0 0 / 10%);
     }
   }
 }

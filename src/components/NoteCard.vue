@@ -56,11 +56,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-// 自定义字体
-@font-face {
-  font-family: xp;
-  src: url("@/assets/fonts/xp.ttf");
-}
 .note-card {
   height: 240px;
   padding: 10px 20px;
@@ -82,7 +77,7 @@ export default {
   }
   .message {
     height: 140px;
-    font-family: serif;
+    font-family: xp;
     font-size: 14px;
     color: @gray-1;
     letter-spacing: 0.5px;
