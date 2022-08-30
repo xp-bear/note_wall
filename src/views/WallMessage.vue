@@ -9,7 +9,7 @@
     </div>
     <!-- note卡片组件 -->
     <div class="card" :style="{ width: nwidth + 'px' }">
-      <NoteCard v-for="(item, index) in note" :key="index" :note="item" class="card-inner" :width="'288px'"></NoteCard>
+      <NoteCard v-for="(item, index) in note" :key="index" :note="item" class="card-inner" :width="'288px'" :class="{ cardSelected: index == cardSelected }" @click="selectCad(index)"></NoteCard>
     </div>
     <!-- 添加卡片按钮 -->
     <div class="add" :style="{ bottom: addBottom + 'px' }" @click="changeModal()" v-show="!modal">
@@ -41,7 +41,8 @@ export default {
       nwidth: 0, //卡片模块宽度
       addBottom: 30, //add按钮bottom的变量
       title: "写留言", //新建标题
-      modal: true, //模态框的显示与隐藏
+      modal: false, //模态框的显示与隐藏
+      cardSelected: 0, //当前选择的卡片
     };
   },
   mounted() {
@@ -110,6 +111,10 @@ export default {
     addClose() {
       this.modal = false;
     },
+    //选择对应的卡片
+    selectCad(index) {
+      this.cardSelected = index;
+    },
   },
   components: {
     NoteCard,
@@ -162,6 +167,11 @@ export default {
     margin: 0 auto;
     .card-inner {
       margin: 6px;
+      border: 1px solid transparent;
+    }
+    //卡片选择到的样式
+    .cardSelected {
+      border: 1px solid @primary-color;
     }
   }
   .add {
