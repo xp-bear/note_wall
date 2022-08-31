@@ -8,9 +8,14 @@
       <p class="label-list" :class="{ label_selected: nlabel == index }" v-for="(item, index) in label[id]" :key="index" @click="selectNode(index)">{{ item }}</p>
     </div>
     <!-- note卡片组件 -->
-    <div class="card" :style="{ width: nwidth + 'px' }">
+    <!-- 留言墙与照片墙的卡片切换  -->
+    <div class="card" :style="{ width: nwidth + 'px' }" v-show="id == 0">
       <NoteCard v-for="(item, index) in note" :key="index" :note="item" class="card-inner" :width="'288px'" :class="{ cardSelected: index == cardSelected }" @click="selectCad(index)"></NoteCard>
     </div>
+    <div class="photo" v-show="id == 1">
+      <PhotoCard v-for="(item, index) in photos" :key="index" :photo="item" class="photo-card"></PhotoCard>
+    </div>
+
     <!-- 添加卡片按钮 -->
     <div class="add" :style="{ bottom: addBottom + 'px' }" @click="changeModal()" v-show="!modal">
       <span class="iconfont icon-tianjia"></span>
@@ -30,22 +35,30 @@ import NoteCard from "@/components/NoteCard.vue";
 import Modal from "@/components/Modal.vue";
 import NewCard from "@/components/NewCard.vue";
 import CardDetail from "@/components/CardDetail.vue";
-import { note } from "../../mock/index";
+import PhotoCard from "@/components/PhotoCard.vue";
+import { note, photos } from "../../mock/index";
 export default {
   name: "WallMessage",
   data() {
     return {
       wallType,
       label, //当前的标签
-      id: 0, // 留言墙与照片墙的切换id
+      // id: 0, // 留言墙与照片墙的切换id
       nlabel: -1, //当前对应的标签
       note: note.data, //mock数据
+      photos: photos.data, //照片数据
       nwidth: 0, //卡片模块宽度
       addBottom: 30, //add按钮bottom的变量
       title: "写留言", //新建标题
       modal: false, //模态框的显示与隐藏
       cardSelected: -1, //当前选择的卡片
     };
+  },
+  computed: {
+    // 获取id属性值,判断是留言墙还是照片墙
+    id() {
+      return this.$route.query.id;
+    },
   },
   mounted() {
     this.noteWidth();
@@ -141,6 +154,7 @@ export default {
     Modal,
     NewCard,
     CardDetail,
+    PhotoCard,
   },
 };
 </script>
@@ -193,6 +207,11 @@ export default {
     //卡片选择到的样式
     .cardSelected {
       border: 1px solid @primary-color;
+    }
+  }
+  .photo {
+    .photo-card {
+      width: 200px;
     }
   }
   .add {

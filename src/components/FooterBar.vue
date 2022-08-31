@@ -52,7 +52,7 @@ export default {
   box-sizing: border-box;
   margin-top: 40px;
   .left {
-    // flex: 1.3;
+    flex: 1.3;
     .footer-title {
       display: flex;
       margin-bottom: 22px;

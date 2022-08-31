@@ -5,8 +5,8 @@
       <p class="logo-name">熊仔留言墙</p>
     </div>
     <div class="menu">
-      <Button nom="cprimary" class="menu-message">留言墙</Button>
-      <Button nom="csecondary" class="menu-photo">照片墙</Button>
+      <Button :nom="getId == 0 ? 'cprimary' : 'csecondary'" class="menu-message" @click="changeWall(0)">留言墙</Button>
+      <Button :nom="getId == 1 ? 'cprimary' : 'csecondary'" class="menu-photo" @click="changeWall(1)">照片墙</Button>
     </div>
     <div class="user">
       <div class="user-head"></div>
@@ -20,6 +20,19 @@ export default {
   name: "TopBar",
   data() {
     return {};
+  },
+  computed: {
+    // 获取照片墙与留言墙id
+    getId() {
+      return this.$route.query.id;
+    },
+  },
+  methods: {
+    changeWall(index) {
+      this.$router.push({
+        query: { id: index },
+      });
+    },
   },
   components: {
     Button,
