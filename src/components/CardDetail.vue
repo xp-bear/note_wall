@@ -5,7 +5,7 @@
       <p class="report">举报</p>
     </div>
     <!-- 卡片组件 -->
-    <NoteCard :note="card"></NoteCard>
+    <NoteCard :note="card" class="note-card"></NoteCard>
     <!-- 输入框文本域 -->
     <div class="form">
       <textarea placeholder="请输入评论内容…" class="title-menu-min"></textarea>
@@ -14,17 +14,38 @@
         <Button>评论</Button>
       </div>
     </div>
+    <!-- 品论 -->
+    <p class="title">评论 {{ card.comment }}</p>
+    <div class="comment">
+      <div class="comment-li" v-for="(item, index) in comments" :key="index">
+        <div class="user-head" :style="{ backgroundImage: portrait[item.imgurl] }"></div>
+        <div class="comment-m">
+          <div class="m-top">
+            <p class="name">{{ item.name }}</p>
+            <p class="time">{{ dateOne(item.moment) }}</p>
+          </div>
+          <div class="m-bottom title-menu-min">{{ item.message }}</div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
 import NoteCard from "@/components/NoteCard.vue";
 import Button from "@/components/Button.vue";
+import { comments } from "../../mock/index";
+import { portrait } from "@/utils/data";
+import { dateOne } from "@/utils/time_format";
 export default {
   name: "CardDetail",
   data() {
-    return {};
+    return {
+      comments: comments.data, //评论数组
+      portrait, //背景头像
+    };
   },
+  methods: { dateOne },
   props: {
     card: {
       default: {},
@@ -39,6 +60,12 @@ export default {
 
 <style lang="less" scoped>
 .CardDetail {
+  // 初始化鼠标悬停卡片的位移距离为 0px
+  .note-card {
+    &:hover {
+      transform: translate(0) !important;
+    }
+  }
   .top-bt {
     position: fixed;
     top: 22px;
@@ -86,6 +113,56 @@ export default {
         font-weight: 400;
         padding: 8px 10px;
         font-family: "xp";
+      }
+    }
+  }
+  .title {
+    font-family: PingFangSC-Semibold;
+    font-size: 14px;
+    color: #202020;
+    font-weight: 600;
+    padding-top: 30px;
+    padding-bottom: 20px;
+  }
+  .comment {
+    .comment-li {
+      width: 100%;
+      display: flex;
+      padding-bottom: 30px;
+      .user-head {
+        flex: none;
+        width: 28px;
+        height: 28px;
+        border-radius: 50%;
+        margin-right: 8px;
+      }
+      .comment-m {
+        .m-top {
+          display: flex;
+          align-items: center;
+          margin-bottom: 5px;
+          .name {
+            font-family: PingFangSC-Semibold;
+            font-size: 14px;
+            color: #202020;
+            font-weight: 600;
+            margin-right: 4px;
+          }
+          .time {
+            font-family: PingFangSC-Regular;
+            font-size: 12px;
+            color: #949494;
+            font-weight: 400;
+          }
+        }
+        .m-bottom {
+          font-family: "xp";
+          font-size: 14px;
+          color: #202020;
+          line-height: 22px;
+          font-weight: 400;
+          overflow: auto;
+        }
       }
     }
   }

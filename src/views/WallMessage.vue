@@ -16,10 +16,10 @@
       <span class="iconfont icon-tianjia"></span>
     </div>
     <!-- 弹出层模态框 -->
-    <Modal :title="title" @close="changeModal()" :idModal="modal">
+    <Modal :title="title" @close="closeModal()" :idModal="modal">
       <!-- 新建卡片组件 -->
-      <NewCard :id="id" @addClose="addClose" v-show="cardSelected == -1"></NewCard>
-      <CardDetail :card="note[cardSelected]" v-show="cardSelected !== -1"></CardDetail>
+      <NewCard :id="id" @addClose="addClose()" v-if="cardSelected == -1"></NewCard>
+      <CardDetail :card="note[cardSelected]" v-else="cardSelected !== -1"></CardDetail>
     </Modal>
   </div>
 </template>
@@ -43,8 +43,8 @@ export default {
       nwidth: 0, //卡片模块宽度
       addBottom: 30, //add按钮bottom的变量
       title: "", //新建标题
-      modal: true, //模态框的显示与隐藏
-      cardSelected: 0, //当前选择的卡片
+      modal: false, //模态框的显示与隐藏
+      cardSelected: -1, //当前选择的卡片
     };
   },
   mounted() {
@@ -108,6 +108,11 @@ export default {
     //弹窗的显示与隐藏
     changeModal() {
       this.modal = !this.modal;
+    },
+    // 模态框关闭图标
+    closeModal() {
+      this.modal = !this.modal;
+      this.cardSelected = -1;
     },
     //传入子级,关闭弹窗
     addClose() {
