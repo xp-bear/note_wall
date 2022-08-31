@@ -42,7 +42,7 @@ export default {
       note: note.data, //mock数据
       nwidth: 0, //卡片模块宽度
       addBottom: 30, //add按钮bottom的变量
-      title: "", //新建标题
+      title: "写留言", //新建标题
       modal: false, //模态框的显示与隐藏
       cardSelected: -1, //当前选择的卡片
     };
@@ -108,6 +108,7 @@ export default {
     //弹窗的显示与隐藏
     changeModal() {
       this.modal = !this.modal;
+      this.title = "写留言";
     },
     // 模态框关闭图标
     closeModal() {
