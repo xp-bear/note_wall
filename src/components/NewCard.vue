@@ -180,7 +180,7 @@ export default {
     justify-content: space-between;
     transform: translateX(-20px);
     z-index: 100;
-    background-color: #ffffff80;
+    background-color: rgba(255, 255, 255, 0.8);
     backdrop-filter: blur(20px);
     box-shadow: 0px 0px 4px 0px rgba(0, 0, 0, 0.1);
   }

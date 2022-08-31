@@ -28,7 +28,7 @@ export const portrait = [
   "linear-gradient(180deg,#0FA1FF 0%,#9A36F0 100%)",
   "linear-gradient(180deg,#C9AAFF 0%,#6D3CF5 100%)",
   "linear-gradient(180deg,#9EAAFF 0%,#3846F4 100%)",
-  "linear-gradient(180deg,#8CD8FF 0%,#2AGAFO 100%)",
+  "linear-gradient(180deg,#8CD8FF 0%,#d4237a 100%)",
   "linear-gradient(180deg,#7BE7FF 0%,#1E85E2 100%)",
   "linear-gradient(180deg,#92FDFF 0%,#14B2DD 100%)",
   "linear-gradient(180deg,#89FED8 0%,#18C997 100%)",

@@ -119,7 +119,7 @@ export default {
       }
     }
     .name {
-      font-family: serif;
+      font-family: "xp";
       font-size: 16px;
       font-weight: 700;
     }

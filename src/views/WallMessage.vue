@@ -210,8 +210,13 @@ export default {
     }
   }
   .photo {
+    width: 88%;
+    margin: 0 auto;
+    columns: 6; //6列
+    column-gap: 4px;
     .photo-card {
-      width: 200px;
+      margin-bottom: 4px;
+      break-inside: avoid;
     }
   }
   .add {

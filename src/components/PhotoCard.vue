@@ -43,6 +43,8 @@ export default {
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, 0.2);
+    opacity: 0;
+    transition: all 0.3s;
   }
   .photo-like {
     position: absolute;
@@ -56,12 +58,23 @@ export default {
     padding: 0 12px;
     display: flex;
     align-items: center;
+    opacity: 0;
+    transition: all 0.3s;
     span:nth-child(1) {
       color: @gray-3;
       margin-right: 4px;
+      cursor: pointer;
     }
     .like-data {
       color: @gray-1;
+    }
+  }
+  &:hover {
+    .photo-bg {
+      opacity: 1;
+    }
+    .photo-like {
+      opacity: 1;
     }
   }
 }
