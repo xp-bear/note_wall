@@ -125,6 +125,7 @@ export default {
     padding-bottom: 20px;
   }
   .comment {
+    padding-bottom: 50px;
     .comment-li {
       width: 100%;
       display: flex;

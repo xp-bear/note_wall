@@ -54,7 +54,6 @@ export const comments = Mock.mock({
 });
 
 //照片的数据构造
-
 export const photos = Mock.mock({
   "data|19": [
     {
@@ -81,7 +80,7 @@ export const photos = Mock.mock({
       //是否举报
       "report|0-20": 0,
       //类型(照片墙,还是留言墙)
-      type: 0,
+      type: 1,
     },
   ],
 });

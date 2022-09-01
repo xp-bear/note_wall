@@ -42,6 +42,8 @@ export default {
 
 <style lang="less" scoped>
 .footer-bar {
+  position: relative;
+  z-index: -1;
   width: 100%;
   height: 200px;
   background: @gray-1;

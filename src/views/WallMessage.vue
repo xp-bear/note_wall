@@ -9,11 +9,13 @@
     </div>
     <!-- note卡片组件 -->
     <!-- 留言墙与照片墙的卡片切换  -->
+    <!-- 留言墙卡片 -->
     <div class="card" :style="{ width: nwidth + 'px' }" v-show="id == 0">
       <NoteCard v-for="(item, index) in note" :key="index" :note="item" class="card-inner" :width="'288px'" :class="{ cardSelected: index == cardSelected }" @click="selectCad(index)"></NoteCard>
     </div>
+    <!-- 照片墙图片 -->
     <div class="photo" v-show="id == 1">
-      <PhotoCard v-for="(item, index) in photos" :key="index" :photo="item" class="photo-card"></PhotoCard>
+      <PhotoCard v-for="(item, index) in photos" :key="index" :photo="item" class="photo-card" @click="selectCad(index)"></PhotoCard>
     </div>
 
     <!-- 添加卡片按钮 -->
@@ -24,8 +26,11 @@
     <Modal :title="title" @close="closeModal()" :idModal="modal">
       <!-- 新建卡片组件 -->
       <NewCard :id="id" @addClose="addClose()" v-if="cardSelected == -1"></NewCard>
-      <CardDetail :card="note[cardSelected]" v-else="cardSelected !== -1"></CardDetail>
+      <!-- 这里弹出层要区分是留言墙还是照片墙的数据 -->
+      <CardDetail :card="cards[cardSelected]" v-else="cardSelected !== -1"></CardDetail>
     </Modal>
+    <!-- 照片弹出层 -->
+    <PhotoView v-show="id == 1 && modal"></PhotoView>
   </div>
 </template>
 
@@ -36,6 +41,7 @@ import Modal from "@/components/Modal.vue";
 import NewCard from "@/components/NewCard.vue";
 import CardDetail from "@/components/CardDetail.vue";
 import PhotoCard from "@/components/PhotoCard.vue";
+import PhotoView from "@/components/PhotoView.vue";
 import { note, photos } from "../../mock/index";
 export default {
   name: "WallMessage",
@@ -58,6 +64,16 @@ export default {
     // 获取id属性值,判断是留言墙还是照片墙
     id() {
       return this.$route.query.id;
+    },
+    //区分照片墙还是留言墙
+    cards() {
+      let data = "";
+      if (this.$route.query.id == 0) {
+        data = note.data;
+      } else if (this.$route.query.id == 1) {
+        data = photos.data;
+      }
+      return data;
     },
   },
   mounted() {
@@ -155,6 +171,7 @@ export default {
     NewCard,
     CardDetail,
     PhotoCard,
+    PhotoView,
   },
 };
 </script>
@@ -214,6 +231,7 @@ export default {
     margin: 0 auto;
     columns: 6; //6列
     column-gap: 4px;
+    padding-top: 28px;
     .photo-card {
       margin-bottom: 4px;
       break-inside: avoid;
