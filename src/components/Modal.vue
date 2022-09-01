@@ -52,6 +52,7 @@ function closeModal() {
     box-sizing: border-box;
     .modal-name {
       font-size: 16px;
+      font-family: "xp";
       color: #202020;
       font-weight: 600;
     }

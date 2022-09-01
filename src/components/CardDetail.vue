@@ -73,6 +73,7 @@ export default {
     display: flex;
     box-sizing: border-box;
     font-size: 16px;
+    font-family: "xp";
     font-weight: 400;
     .revoke {
       color: #3b73f0;

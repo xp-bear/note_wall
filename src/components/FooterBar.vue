@@ -17,8 +17,14 @@
     <div class="center">
       <span class="center-title">友情链接</span>
       <div class="center-link">
-        <a href="#">熊仔音乐</a>&nbsp;&nbsp;&nbsp;&nbsp;
-        <a href="#">聊天室</a>
+        <div>
+          <a href="http://xxoutman.cn/" target="_blank">熊仔音乐</a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://150.158.21.251:3000/" target="_blank">聊天室</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="http://flask.xxoutman.cn/" target="_blank">flask博客</a>
+        </div>
+        <div>
+          <a href="http://blog.xxoutman.cn/" target="_blank">熊仔笔记官网</a>&nbsp;&nbsp;&nbsp;&nbsp;
+          <a href="http://150.158.21.251:3300/" target="_blank">熊仔资源</a>
+        </div>
       </div>
     </div>
     <div class="right">
@@ -42,8 +48,6 @@ export default {
 
 <style lang="less" scoped>
 .footer-bar {
-  position: relative;
-  z-index: -1;
   width: 100%;
   height: 200px;
   background: @gray-1;
