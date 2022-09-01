@@ -30,7 +30,7 @@
       <CardDetail :card="cards[cardSelected]" v-else="cardSelected !== -1"></CardDetail>
     </Modal>
     <!-- 照片弹出层 -->
-    <PhotoView v-show="id == 1 && modal"></PhotoView>
+    <PhotoView :isView="isView" :photos="photoArr" :nowNumber="cardSelected" @viewSwitch="viewSwitch"></PhotoView>
   </div>
 </template>
 
@@ -53,11 +53,13 @@ export default {
       nlabel: -1, //当前对应的标签
       note: note.data, //mock数据
       photos: photos.data, //照片数据
+      photoArr: [], //图片数组
       nwidth: 0, //卡片模块宽度
       addBottom: 30, //add按钮bottom的变量
       title: "写留言", //新建标题
       modal: false, //模态框的显示与隐藏
       cardSelected: -1, //当前选择的卡片
+      isView: false, //照片弹出层是否显示
     };
   },
   computed: {
@@ -76,6 +78,15 @@ export default {
       return data;
     },
   },
+  //监听属性值id的变化,代表是否切换留言墙与照片墙
+  watch: {
+    id(newVal, oldVal) {
+      this.modal = false;
+      this.isView = false;
+      this.nlabel = -1;
+      this.cardSelected = -1;
+    },
+  },
   mounted() {
     this.noteWidth();
     //监听屏幕宽度变化
@@ -92,6 +103,8 @@ export default {
     btn.addEventListener("mouseout", function (e) {
       btn.id = "animation-reduce";
     });
+    // 获取图片数组
+    this.getPhoto();
   },
   unmounted() {
     //注销在全局绑定的事件
@@ -143,6 +156,10 @@ export default {
     closeModal() {
       this.modal = !this.modal;
       this.cardSelected = -1;
+      // 隐藏照片弹出层
+      if (this.id == 1) {
+        this.isView = false;
+      }
     },
     //传入子级,关闭弹窗
     addClose() {
@@ -153,15 +170,39 @@ export default {
       if (index != this.cardSelected) {
         this.cardSelected = index;
         this.modal = true;
+        // 显示照片弹出层
+        if (this.id == 1) {
+          this.isView = true;
+        }
       } else {
         this.cardSelected = -1;
         this.modal = false;
+        // 隐藏照片弹出层
+        if (this.id == 1) {
+          this.isView = false;
+        }
       }
       //判断前面模态框开头的标题
       if (this.cardSelected == -1) {
         this.title = "写留言";
       } else {
         this.title = "";
+      }
+    },
+
+    //得到纯图片数组
+    getPhoto() {
+      for (let i = 0; i < this.photos.length; i++) {
+        this.photoArr.push(this.photos[i].imgurl);
+      }
+    },
+
+    //图片弹出层组件左右按钮切换
+    viewSwitch(index) {
+      if (index == 0) {
+        this.cardSelected--;
+      } else {
+        this.cardSelected++;
       }
     },
   },

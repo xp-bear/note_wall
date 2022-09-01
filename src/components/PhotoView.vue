@@ -1,17 +1,19 @@
 <template>
-  <div class="PhotoView">
-    <div class="bg"></div>
-    <div class="viewer-photo">
-      <img :src="require('../../static/4.jpg')" alt="" class="photo-img" />
+  <transition name="view">
+    <div class="PhotoView" v-if="isView">
+      <div class="bg"></div>
+      <div class="viewer-photo">
+        <img :src="require('../../static/' + photos[nowNumber] + '.jpg')" alt="" class="photo-img" />
+      </div>
+      <!-- 左右两边按钮 -->
+      <div class="switch sw-left" @click="changeNumber(0)" v-show="nowNumber > 0">
+        <span class="iconfont icon-xiangzuo"></span>
+      </div>
+      <div class="switch sw-right" @click="changeNumber(1)" v-show="nowNumber < photos.length-1">
+        <span class="iconfont icon-xiangyou"></span>
+      </div>
     </div>
-    <!-- 左右两边按钮 -->
-    <div class="switch sw-left">
-      <span class="iconfont icon-xiangzuo"></span>
-    </div>
-    <div class="switch sw-right">
-      <span class="iconfont icon-xiangyou"></span>
-    </div>
-  </div>
+  </transition>
 </template>
 
 <script>
@@ -19,6 +21,27 @@ export default {
   name: "PhotoView",
   data() {
     return {};
+  },
+  props: {
+    //图片数组
+    photos: {
+      default: [],
+    },
+    //当前选择到的是那一张
+    nowNumber: {
+      type: Number,
+      default: 0,
+    },
+    //图片预览组件是否展示
+    isView: {
+      default: false,
+    },
+  },
+  // 左右按钮,发送到父级的事件,触发修改
+  methods: {
+    changeNumber(e) {
+      this.$emit("viewSwitch", e);
+    },
   },
 };
 </script>
@@ -83,6 +106,33 @@ export default {
   }
   .sw-right {
     right: 380px;
+  }
+}
+//transition 组件动画特效
+.view {
+  //入场动画
+  &-enter {
+    &-from {
+      opacity: 0;
+    }
+    &-active {
+      transition: all 0.2s;
+    }
+    &-to {
+      opacity: 1;
+    }
+  }
+  //出场动画
+  &-leave {
+    &-from {
+      opacity: 1;
+    }
+    &-active {
+      transition: all 0.2s;
+    }
+    &-to {
+      opacity: 0;
+    }
   }
 }
 </style>

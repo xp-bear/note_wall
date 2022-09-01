@@ -74,7 +74,7 @@ export const photos = Mock.mock({
       //评论
       "comment|0-120": 0,
       //背景色
-      "imgurl|1-3": 0,
+      "imgurl|1-4": 0,
       //是否撤销
       "revoke|0-20": 0,
       //是否举报
