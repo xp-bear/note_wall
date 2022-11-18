@@ -68,7 +68,7 @@ export default {
 // 弹窗组件样式
 .message {
   position: fixed;
-  top: 40px;
+  top: 55px;
   width: 100%;
   height: 40px;
   display: flex;
@@ -112,11 +112,11 @@ export default {
 .down {
   &-enter {
     &-from {
-      transform: translateY(-40px);
+      transform: translateY(-55px);
       opacity: 0;
     }
     &-active {
-      transition: all 0.3s;
+      transition: all 0.5s;
     }
 
     &-to {
@@ -130,11 +130,11 @@ export default {
       opacity: 1;
     }
     &-active {
-      transition: all 0.3s;
+      transition: all 0.5s;
     }
 
     &-to {
-      transform: translateY(-40px);
+      transform: translateY(-55px);
       opacity: 0;
     }
   }

@@ -124,7 +124,7 @@ export default {
         insertWallApi(data).then((res) => {
           this.message = "";
           this.$emit("clickbt", data); //告诉父组件,新建一张卡片
-          this.$message({ type: "success", message: "感谢您的记录!" });
+          this.$message({ type: "success", message: "新增留言成功!" });
         });
       }
     },
