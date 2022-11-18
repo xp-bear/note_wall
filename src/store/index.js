@@ -4,12 +4,13 @@ import { createStore } from "vuex";
 const store = createStore({
   state() {
     return {
-      count: 0,
+      user: "", //用户信息
     };
   },
   mutations: {
-    increment(state) {
-      state.count++;
+    // n 为外面传递过来的属性值
+    getUser(state, n) {
+      state.user = n;
     },
   },
 });

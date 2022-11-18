@@ -67,6 +67,7 @@ export default {
     }
   }
   .menu {
+    width: 290px;
     .menu-message {
       margin-right: 24px;
     }

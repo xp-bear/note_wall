@@ -98,6 +98,7 @@ export default {
 // 自定义字体
 @font-face {
   font-family: xp;
-  src: url("@/assets/fonts/two.ttf");
+  // src: url("@/assets/fonts/two.ttf");
+  src: url("http://cdn.xxoutman.cn/two.ttf");
 }
 </style>

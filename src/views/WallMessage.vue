@@ -25,7 +25,7 @@
     <!-- 弹出层模态框 -->
     <Modal :title="title" @close="closeModal()" :idModal="modal">
       <!-- 新建卡片组件 -->
-      <NewCard :id="id" @addClose="addClose()" v-if="cardSelected == -1"></NewCard>
+      <NewCard :id="id" @addClose="addClose()" v-if="cardSelected == -1" @clickbt="clickbt"></NewCard>
       <!-- 这里弹出层要区分是留言墙还是照片墙的数据 -->
       <CardDetail :card="cards[cardSelected]" v-else="cardSelected !== -1"></CardDetail>
     </Modal>
@@ -204,6 +204,10 @@ export default {
       } else {
         this.cardSelected++;
       }
+    },
+    // newCard传递过来的数据,进行插入
+    clickbt(data) {
+      console.log(data);
     },
   },
   components: {

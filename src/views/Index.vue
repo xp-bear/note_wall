@@ -15,21 +15,25 @@
 //引入组件
 import TopBar from "@/components/TopBar";
 import FooterBar from "@/components/FooterBar";
-
+import { signIpApi } from "@/api/index";
 export default {
   name: "Index",
   data() {
     return {};
   },
   created() {
-    // this.getData();
+    this.getUser();
   },
   methods: {
-    // getData() {
-    //   this.axios.get(`http://150.158.21.251:4000/search?keywords=%E6%B5%B7%E9%98%94%E5%A4%A9%E7%A9%BA`).then((res) => {
-    //     console.log(res.data);
-    //   });
-    // },
+    getUser() {
+      //获取用户ip地址
+      signIpApi().then((res) => {
+        let user = {
+          id: res.ip,
+        };
+        this.$store.commit("getUser", user);
+      });
+    },
   },
   components: {
     TopBar,

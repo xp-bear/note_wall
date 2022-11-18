@@ -26,6 +26,7 @@ export default {
   text-align: center;
   border: none;
   cursor: pointer;
+  box-shadow: 0 0 3px #ccc;
 }
 // size
 .max {
