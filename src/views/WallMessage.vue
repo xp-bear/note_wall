@@ -4,45 +4,96 @@
     <p class="title">{{ wallType[id].name }}</p>
     <p class="slogan">{{ wallType[id].slogan }}</p>
     <div class="label">
-      <p class="label-list" :class="{ label_selected: nlabel == -1 }" @click="selectNode(-1)">全部</p>
-      <p class="label-list" :class="{ label_selected: nlabel == index }" v-for="(item, index) in label[id]" :key="index" @click="selectNode(index)">{{ item }}</p>
+      <p
+        class="label-list"
+        :class="{ label_selected: nlabel == -1 }"
+        @click="selectNode(-1)"
+      >
+        全部
+      </p>
+      <p
+        class="label-list"
+        :class="{ label_selected: nlabel == index }"
+        v-for="(item, index) in label[id]"
+        :key="index"
+        @click="selectNode(index)"
+      >
+        {{ item }}
+      </p>
     </div>
     <!-- note卡片组件 -->
     <!-- 留言墙与照片墙的卡片切换  -->
     <!-- 留言墙卡片 -->
     <div class="card" :style="{ width: nwidth + 'px' }" v-show="id == 0">
-      <NoteCard v-for="(item, index) in note" :key="index" :note="item" class="card-inner" :width="'288px'" :class="{ cardSelected: index == cardSelected }" @click="selectCad(index)"></NoteCard>
+      <NoteCard
+        v-for="(item, index) in note"
+        :key="index"
+        :note="item"
+        class="card-inner"
+        :width="'288px'"
+        :class="{ cardSelected: index == cardSelected }"
+        @click="selectCad(index)"
+      ></NoteCard>
     </div>
     <!-- 照片墙图片 -->
     <div class="photo" v-show="id == 1">
-      <PhotoCard v-for="(item, index) in photos" :key="index" :photo="item" class="photo-card" @click="selectCad(index)"></PhotoCard>
+      <PhotoCard
+        v-for="(item, index) in photos"
+        :key="index"
+        :photo="item"
+        class="photo-card"
+        @click="selectCad(index)"
+      ></PhotoCard>
+    </div>
+    <!-- 卡片状态 -->
+    <div class="none-msg" v-if="!note">
+      <img :src="none[id].url" />
+      <p>{{ none[id].msg }}</p>
     </div>
 
     <!-- 添加卡片按钮 -->
-    <div class="add" :style="{ bottom: addBottom + 'px' }" @click="changeModal()" v-show="!modal">
+    <div
+      class="add"
+      :style="{ bottom: addBottom + 'px' }"
+      @click="changeModal()"
+      v-show="!modal"
+    >
       <span class="iconfont icon-tianjia"></span>
     </div>
     <!-- 弹出层模态框 -->
     <Modal :title="title" @close="closeModal()" :idModal="modal">
       <!-- 新建卡片组件 -->
-      <NewCard :id="id" @addClose="addClose()" v-if="cardSelected == -1" @clickbt="clickbt"></NewCard>
+      <NewCard
+        :id="id"
+        @addClose="addClose()"
+        v-if="cardSelected == -1"
+        @clickbt="clickbt"
+      ></NewCard>
       <!-- 这里弹出层要区分是留言墙还是照片墙的数据 -->
-      <CardDetail :card="cards[cardSelected]" v-else="cardSelected !== -1"></CardDetail>
+      <CardDetail
+        :card="cards[cardSelected]"
+        v-else="cardSelected !== -1"
+      ></CardDetail>
     </Modal>
     <!-- 照片弹出层 -->
-    <PhotoView :isView="isView" :photos="photoArr" :nowNumber="cardSelected" @viewSwitch="viewSwitch"></PhotoView>
+    <PhotoView
+      :isView="isView"
+      :photos="photoArr"
+      :nowNumber="cardSelected"
+      @viewSwitch="viewSwitch"
+    ></PhotoView>
   </div>
 </template>
 
 <script>
-import { label, wallType } from "@/utils/data";
+import { label, wallType, none } from "@/utils/data";
 import NoteCard from "@/components/NoteCard.vue";
 import Modal from "@/components/Modal.vue";
 import NewCard from "@/components/NewCard.vue";
 import CardDetail from "@/components/CardDetail.vue";
 import PhotoCard from "@/components/PhotoCard.vue";
 import PhotoView from "@/components/PhotoView.vue";
-import { note, photos } from "../../mock/index";
+import { photos } from "../../mock/index";
 export default {
   name: "WallMessage",
   data() {
@@ -51,7 +102,7 @@ export default {
       label, //当前的标签
       // id: 0, // 留言墙与照片墙的切换id
       nlabel: -1, //当前对应的标签
-      note: note.data, //mock数据
+      note: "", //mock数据
       photos: photos.data, //照片数据
       photoArr: [], //图片数组
       nwidth: 0, //卡片模块宽度
@@ -60,6 +111,8 @@ export default {
       modal: false, //模态框的显示与隐藏
       cardSelected: -1, //当前选择的卡片
       isView: false, //照片弹出层是否显示
+      isOk: true, //是否加载中
+      none, //当前none空状态图片
     };
   },
   computed: {
@@ -71,7 +124,7 @@ export default {
     cards() {
       let data = "";
       if (this.$route.query.id == 0) {
-        data = note.data;
+        data = this.note;
       } else if (this.$route.query.id == 1) {
         data = photos.data;
       }
@@ -126,7 +179,8 @@ export default {
     //监听页面滚动条的高度变化
     scrollBottom() {
       //获取距离顶部的高度
-      let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+      let scrollTop =
+        document.documentElement.scrollTop || document.body.scrollTop;
       //可视化区域高度
       let clientHeight = document.documentElement.clientHeight;
       //内容高度
@@ -280,6 +334,23 @@ export default {
     .photo-card {
       margin-bottom: 4px;
       break-inside: avoid;
+    }
+  }
+  // 空状态
+  .none-msg {
+    width: 100%;
+    text-align: center;
+    padding-top: 80px;
+    position: absolute;
+    top: 280px;
+    img {
+      display: inline;
+    }
+    p {
+      font-family: serif;
+      font-weight: 700;
+      font-size: 24px;
+      color: #a4a4a4;
     }
   }
   .add {
