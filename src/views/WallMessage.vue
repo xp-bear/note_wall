@@ -4,20 +4,8 @@
     <p class="title">{{ wallType[id].name }}</p>
     <p class="slogan">{{ wallType[id].slogan }}</p>
     <div class="label">
-      <p
-        class="label-list"
-        :class="{ label_selected: nlabel == -1 }"
-        @click="selectNode(-1)"
-      >
-        全部
-      </p>
-      <p
-        class="label-list"
-        :class="{ label_selected: nlabel == index }"
-        v-for="(item, index) in label[id]"
-        :key="index"
-        @click="selectNode(index)"
-      >
+      <p class="label-list" :class="{ label_selected: nlabel == -1 }" @click="selectNode(-1)">全部</p>
+      <p class="label-list" :class="{ label_selected: nlabel == index }" v-for="(item, index) in label[id]" :key="index" @click="selectNode(index)">
         {{ item }}
       </p>
     </div>
@@ -25,63 +13,38 @@
     <!-- 留言墙与照片墙的卡片切换  -->
     <!-- 留言墙卡片 -->
     <div class="card" :style="{ width: nwidth + 'px' }" v-show="id == 0">
-      <NoteCard
-        v-for="(item, index) in note"
-        :key="index"
-        :note="item"
-        class="card-inner"
-        :width="'288px'"
-        :class="{ cardSelected: index == cardSelected }"
-        @click="selectCad(index)"
-      ></NoteCard>
+      <NoteCard v-for="(item, index) in note" :key="index" :note="item" class="card-inner" :width="'288px'" :class="{ cardSelected: index == cardSelected }" @click="selectCad(index)"></NoteCard>
     </div>
     <!-- 照片墙图片 -->
     <div class="photo" v-show="id == 1">
-      <PhotoCard
-        v-for="(item, index) in photos"
-        :key="index"
-        :photo="item"
-        class="photo-card"
-        @click="selectCad(index)"
-      ></PhotoCard>
+      <PhotoCard v-for="(item, index) in photos" :key="index" :photo="item" class="photo-card" @click="selectCad(index)"></PhotoCard>
     </div>
-    <!-- 卡片状态 -->
-    <div class="none-msg" v-if="!note">
+    <!-- 卡片为空的状态 -->
+    <div class="none-msg" v-if="isOk == 0">
       <img :src="none[id].url" />
       <p>{{ none[id].msg }}</p>
     </div>
+    <!-- 加载中的状态 -->
+    <div class="loading" v-show="isOk == -1">
+      <div id="lottie"></div>
+      <p>加载中...</p>
+    </div>
+    <!-- 加载完成,没有更多了 -->
+    <p class="bottom-tip" v-show="isOk == 2">没有更多了...</p>
 
     <!-- 添加卡片按钮 -->
-    <div
-      class="add"
-      :style="{ bottom: addBottom + 'px' }"
-      @click="changeModal()"
-      v-show="!modal"
-    >
+    <div class="add" :style="{ bottom: addBottom + 'px' }" @click="changeModal()" v-show="!modal">
       <span class="iconfont icon-tianjia"></span>
     </div>
     <!-- 弹出层模态框 -->
     <Modal :title="title" @close="closeModal()" :idModal="modal">
       <!-- 新建卡片组件 -->
-      <NewCard
-        :id="id"
-        @addClose="addClose()"
-        v-if="cardSelected == -1"
-        @clickbt="clickbt"
-      ></NewCard>
+      <NewCard :id="id" @addClose="addClose()" v-if="cardSelected == -1" @clickbt="clickbt"></NewCard>
       <!-- 这里弹出层要区分是留言墙还是照片墙的数据 -->
-      <CardDetail
-        :card="cards[cardSelected]"
-        v-else="cardSelected !== -1"
-      ></CardDetail>
+      <CardDetail :card="cards[cardSelected]" v-else="cardSelected !== -1"></CardDetail>
     </Modal>
     <!-- 照片弹出层 -->
-    <PhotoView
-      :isView="isView"
-      :photos="photoArr"
-      :nowNumber="cardSelected"
-      @viewSwitch="viewSwitch"
-    ></PhotoView>
+    <PhotoView :isView="isView" :photos="photoArr" :nowNumber="cardSelected" @viewSwitch="viewSwitch"></PhotoView>
   </div>
 </template>
 
@@ -94,6 +57,9 @@ import CardDetail from "@/components/CardDetail.vue";
 import PhotoCard from "@/components/PhotoCard.vue";
 import PhotoView from "@/components/PhotoView.vue";
 import { photos } from "../../mock/index";
+import lottie from "lottie-web";
+import loadingJson from "@/assets/images/loading.json";
+import { findWallPageApi } from "@/api/index";
 export default {
   name: "WallMessage",
   data() {
@@ -102,7 +68,7 @@ export default {
       label, //当前的标签
       // id: 0, // 留言墙与照片墙的切换id
       nlabel: -1, //当前对应的标签
-      note: "", //mock数据
+      note: [], //mock数据,留言墙的卡片数据
       photos: photos.data, //照片数据
       photoArr: [], //图片数组
       nwidth: 0, //卡片模块宽度
@@ -111,8 +77,11 @@ export default {
       modal: false, //模态框的显示与隐藏
       cardSelected: -1, //当前选择的卡片
       isView: false, //照片弹出层是否显示
-      isOk: true, //是否加载中
+      isOk: -1, //是否加载中, -1为加载中、0为没有拿到数据,1正常显示 2没有更多了
       none, //当前none空状态图片
+      userId: "", //vuex的用户id值
+      page: 1, //当前页码
+      pageSize: 5, //每页多少条
     };
   },
   computed: {
@@ -156,8 +125,14 @@ export default {
     btn.addEventListener("mouseout", function (e) {
       btn.id = "animation-reduce";
     });
-    // 获取图片数组
-    this.getPhoto();
+    // // 获取图片数组
+    // this.getPhoto();
+
+    // 实现loading加载效果
+    this.loading();
+
+    // 先加载用户的ip信息
+    this.testUser();
   },
   unmounted() {
     //注销在全局绑定的事件
@@ -169,6 +144,11 @@ export default {
     //选择节点,切换label
     selectNode(element) {
       this.nlabel = element;
+
+      //清空当前数据
+      this.note = [];
+      this.page = 1;
+      this.getWallCard(this.id);
     },
     //获取note宽度
     noteWidth() {
@@ -179,8 +159,7 @@ export default {
     //监听页面滚动条的高度变化
     scrollBottom() {
       //获取距离顶部的高度
-      let scrollTop =
-        document.documentElement.scrollTop || document.body.scrollTop;
+      let scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
       //可视化区域高度
       let clientHeight = document.documentElement.clientHeight;
       //内容高度
@@ -191,6 +170,11 @@ export default {
         this.addBottom = 30 + scrollTop + clientHeight + 200 - contentHeight;
       } else {
         this.addBottom = 30;
+      }
+      // 加载更多留言墙数据
+      console.log(scrollTop.toFixed(0), clientHeight, contentHeight);
+      if (parseInt(scrollTop.toFixed(0)) + clientHeight == contentHeight) {
+        this.getWallCard(this.id);
       }
     },
     // //关闭弹窗,子传父的方法
@@ -245,11 +229,11 @@ export default {
     },
 
     //得到纯图片数组
-    getPhoto() {
-      for (let i = 0; i < this.photos.length; i++) {
-        this.photoArr.push(this.photos[i].imgurl);
-      }
-    },
+    // getPhoto() {
+    //   for (let i = 0; i < this.photos.length; i++) {
+    //     this.photoArr.push(this.photos[i].imgurl);
+    //   }
+    // },
 
     //图片弹出层组件左右按钮切换
     viewSwitch(index) {
@@ -261,7 +245,75 @@ export default {
     },
     // newCard传递过来的数据,进行插入
     clickbt(data) {
-      console.log(data);
+      // console.log(data);
+      this.cards.unshift(data);
+      this.addClose(); //关闭弹窗
+    },
+    // loading加载动画
+    loading() {
+      if (this.isOk == -1) {
+        this.$nextTick(async () => {
+          let params = {
+            container: document.getElementById("lottie"),
+            render: "svg",
+            loop: true,
+            autoplay: true,
+            animationData: loadingJson,
+          };
+          lottie.loadAnimation(params);
+        });
+      }
+    },
+    // 获取卡片数据(从后端)
+    getWallCard(id) {
+      //只有page>0才执行
+      if (this.page > 0) {
+        this.isOk = -1; //加载中,进行数据的加载
+        let data = {
+          page: this.page,
+          pageSize: this.pageSize,
+          type: id,
+          label: this.nlabel,
+          userId: this.userId,
+        };
+        // console.log(data);
+        findWallPageApi(data).then((res) => {
+          this.note = this.note.concat(res.message);
+          // 设置下一次的page
+          // console.log(res.message);
+          if (res.message.length) {
+            this.page++; //页面加1
+          } else {
+            this.page = 0; //数据加载完了,到底部了
+          }
+
+          //状态逻辑判断
+          if (this.note.length > 0) {
+            this.isOk = 1;
+            if (this.page == 0) {
+              this.isOk = 2;
+            }
+          } else {
+            this.isOk = 0;
+          }
+
+          //如果为图片将图片单独拿出来
+          if (this.id == 1) {
+            for (let i = 0; i < this.note.length; i++) {
+              this.photoArr.push(this.note[i].imgUrl);
+            }
+          }
+        });
+      }
+    },
+    //获取用户id信息
+    testUser() {
+      setTimeout(() => {
+        this.userId = this.$store.state.user.id;
+        // console.log(this.userId);
+        // 加载留言数据
+        this.getWallCard(0);
+      }, 100);
     },
   },
   components: {
@@ -352,6 +404,26 @@ export default {
       font-size: 24px;
       color: #a4a4a4;
     }
+  }
+  // 加载中的状态
+  .loading {
+    text-align: center;
+    width: 100%;
+    p {
+      margin-top: -50px;
+      font-size: 24px;
+      font-family: serif;
+      color: #a4a4a4;
+    }
+    #lottie {
+      margin-top: 20px;
+      height: 200px;
+    }
+  }
+  .bottom-tip {
+    text-align: center;
+    padding: 20px;
+    color: #a4a4a4;
   }
   .add {
     width: 56px;

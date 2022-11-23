@@ -1,5 +1,5 @@
 <template>
-  <div class="note-card" :style="{ width: width, background: cardColor[card.imgurl] }">
+  <div class="note-card" :style="{ width: width, background: cardColor[card.color] }">
     <div cLass="top">
       <p class="time">{{ dateOne(card.moment) }}</p>
       <p class="label">{{ label[card.type][card.label] }}</p>
@@ -8,8 +8,8 @@
     <div class="foot">
       <div class="footer-left">
         <div class="icon">
-          <span class="iconfont icon-aixin1"></span>
-          <span class="value">{{ card.like }}</span>
+          <span class="iconfont icon-aixin1" :class="{ isLike: card.islike[0].count > 0 }"></span>
+          <span class="value">{{ card.like[0].count }}</span>
         </div>
         <div class="icon">
           <span class="iconfont icon-liuyan"></span>
@@ -62,6 +62,7 @@ export default {
   box-sizing: border-box;
   position: relative;
   transition: all 0.3s;
+  font-size: 18px;
   &:hover {
     transform: translateY(-5px);
   }
@@ -78,7 +79,7 @@ export default {
   .message {
     height: 140px;
     font-family: xp;
-    font-size: 14px;
+    font-size: 16px;
     color: @gray-1;
     letter-spacing: 0.5px;
     overflow-x: hidden;
@@ -116,6 +117,9 @@ export default {
         &:hover {
           color: @error-color;
         }
+      }
+      .isLike {
+        color: @error-color;
       }
     }
     .name {

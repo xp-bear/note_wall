@@ -122,8 +122,25 @@ export default {
       // 新建留言数据
       if (this.message && this.id == 0) {
         insertWallApi(data).then((res) => {
+          // 自己造一张卡片
+          let cradD = {
+            type: this.id,
+            message: this.message,
+            name: name,
+            userId: this.$store.state.user.id,
+            moment: new Date(),
+            label: this.labelSelected, //选择到对应标签的索引
+            color: this.selectedColor, //留言背景颜色索引
+            imgUrl: "",
+            id: res.message.insertId,
+            islike: [{ count: 0 }],
+            like: [{ count: 0 }],
+            comcount: [{ count: 0 }],
+            report: [{ count: 0 }],
+            revoke: [{ count: 0 }],
+          };
+          this.$emit("clickbt", cradD); //告诉父组件,新建一张卡片
           this.message = "";
-          this.$emit("clickbt", data); //告诉父组件,新建一张卡片
           this.$message({ type: "success", message: "新增留言成功!" });
         });
       }
