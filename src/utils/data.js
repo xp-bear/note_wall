@@ -65,11 +65,11 @@ export const rocoImg = [
 // 照片墙或者留言墙为空的时候,加载的空状态
 export const none = [
   {
-    url: "https://www.huohuo90.com:3002/img/card.242a4add.svg",
+    url: "http://cdn.xxoutman.cn/note2.png",
     msg: "还没有留言,快贴上第一张吧!",
   },
   {
-    url: "https://www.huohuo90.com:3002/img/photo.1a8cfd38.svg",
+    url: "http://cdn.xxoutman.cn/photo2.png",
     msg: "还没有照片,快贴上第一张吧!",
   },
 ];

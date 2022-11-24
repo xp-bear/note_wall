@@ -54,7 +54,14 @@ export default {
     // 点击喜欢爱心+1
     clickLike() {
       // 判断是否点击过
-      if (this.card.like[0].count == 0) {
+      // console.log(this.card, this.$store.state.user.id);
+      if (this.card.userId == this.$store.state.user.id) {
+        this.card.islike[0].count = 1;
+        return this.$message({ type: "warning", message: "不可以对自己留言点赞!" });
+      }
+      // console.log(this.card.islike[0].count);
+      // 是否点击过,根据ip地址
+      if (this.card.islike[0].count == 0) {
         let data = {
           wallId: this.card.id,
           userId: this.$store.state.user.id,
@@ -64,7 +71,11 @@ export default {
         insertFeedBackApi(data).then((res) => {
           // card.like[0].count
           this.card.like[0].count++;
+          this.card.islike[0].count = 1;
         });
+        // console.log(this.card);
+      } else if (this.card.islike[0].count == 1) {
+        // console.log("已经点击过");
       }
     },
   },

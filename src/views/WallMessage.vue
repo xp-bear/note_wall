@@ -256,6 +256,7 @@ export default {
     // newCard传递过来的数据,进行插入
     clickbt(data) {
       // console.log(data);
+      this.isOk = 1;
       this.cards.unshift(data);
       //如果是图片,加载图片链接
       if (this.id == 1) {

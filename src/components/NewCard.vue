@@ -26,7 +26,7 @@
 
     <!-- 新建卡片 -->
     <div class="card-main" :style="{ background: id == 0 ? cardColor[selectedColor] : cardColor[5] }">
-      <textarea placeholder="留言..." class="message title-menu-min" ref="textarea" v-model="message"></textarea>
+      <textarea placeholder="留言..." class="message title-menu-min" ref="textarea" v-model="message" style="white-space: pre-wrap"></textarea>
       <input type="text" placeholder="签名..." class="name" v-model="sign" />
     </div>
     <!-- 选择标签 -->
