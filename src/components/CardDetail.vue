@@ -72,7 +72,7 @@ export default {
           name: this.name,
           moment: new Date(),
         };
-        console.log(data);
+        // console.log(data);
         insertCommentApi(data).then((res) => {
           this.comments.unshift(data);
           this.cards.comcount[0].count++;

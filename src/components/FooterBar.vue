@@ -12,7 +12,7 @@
         用户将留言便签贴在留言墙上，用户可以自定义便签颜色和内容属性，不仅可以用于交流，也是一场记录。
       </p>
       <br />
-      <p class="footer-beian">声明&nbsp;&nbsp;&nbsp;&nbsp;备案/许可证粤ICP备19012866号 &nbsp;&nbsp;&nbsp;&nbsp;网站备案/许可证粤ICP备19012866号</p>
+      <p class="footer-beian">声明/备案/许可证&nbsp;&nbsp;&nbsp;&nbsp;鄂ICP备2022003396号-1</p>
     </div>
     <div class="center">
       <span class="center-title">友情链接</span>
@@ -30,8 +30,8 @@
     <div class="right">
       <span class="right-title">打赏</span>
       <div class="right-pay">
-        <div><img src="@/assets/images/person.jpg" alt="" /><span>微信支付</span></div>
-        <div><img src="@/assets/images/person.jpg" alt="" /><span>支付宝支付</span></div>
+        <div><img src="@/assets/images/wx.png" alt="" /><span>微信支付</span></div>
+        <div><img src="@/assets/images/zhifu.png" alt="" /><span>支付宝支付</span></div>
       </div>
     </div>
   </div>

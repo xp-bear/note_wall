@@ -144,41 +144,49 @@ export default {
           this.$message({ type: "success", message: "新增留言成功!" });
         });
       } else if (this.url && this.id == 1) {
-        this.updatePhoto(); //图片提交
-
-        setTimeout(() => {
-          data.imgUrl = this.url;
-          insertWallApi(data).then((res) => {
-            // 自己造一张卡片
-            let cradD = {
-              type: this.id,
-              message: this.message,
-              name: name,
-              userId: this.$store.state.user.id,
-              moment: new Date(),
-              label: this.labelSelected, //选择到对应标签的索引
-              color: this.selectedColor, //留言背景颜色索引
-              imgUrl: this.url, //图片地址
-              id: res.message.insertId,
-              islike: [{ count: 0 }],
-              like: [{ count: 0 }],
-              comcount: [{ count: 0 }],
-              report: [{ count: 0 }],
-              revoke: [{ count: 0 }],
-            };
-            console.log(cradD);
-            this.$emit("clickbt", cradD); //告诉父组件,新建一张卡片
-            this.message = "";
-            this.url = "";
-            this.$message({ type: "success", message: "新增留言成功!" });
+        // this.updatePhoto(); //图片提交
+        // 图片提交
+        // -----------
+        let file = document.getElementById("file");
+        if (file.files.length > 0) {
+          let fromData = new FormData();
+          fromData.append("file", file.files[0]);
+          // 提交后端
+          profileApi(fromData).then((res) => {
+            this.url = res.imgUrl;
+            // -----------
+            data.imgUrl = this.url;
+            insertWallApi(data).then((res) => {
+              // 自己造一张卡片
+              let cradD = {
+                type: this.id,
+                message: this.message,
+                name: name,
+                userId: this.$store.state.user.id,
+                moment: new Date(),
+                label: this.labelSelected, //选择到对应标签的索引
+                color: this.selectedColor, //留言背景颜色索引
+                imgUrl: this.url, //图片地址
+                id: res.message.insertId,
+                islike: [{ count: 0 }],
+                like: [{ count: 0 }],
+                comcount: [{ count: 0 }],
+                report: [{ count: 0 }],
+                revoke: [{ count: 0 }],
+              };
+              this.$emit("clickbt", cradD); //告诉父组件,新建一张卡片
+              this.message = "";
+              this.url = "";
+              this.$message({ type: "success", message: "新增留言成功!" });
+            });
           });
-        }, 100);
+        }
       }
     },
     // 上传图片临时链接显示
     showPhoto() {
       let aa = getObjectURL(document.getElementById("file").files[0]);
-      console.log(aa);
+      // console.log(aa);
       this.url = aa;
     },
     // 鼠标经过,显示修改上传图标的背景
@@ -190,18 +198,18 @@ export default {
       this.$refs.changeIcon ? (this.$refs.changeIcon.style.backgroundColor = "#ffffff60") : "";
     },
     // 图片提交
-    updatePhoto() {
-      let file = document.getElementById("file");
-      if (file.files.length > 0) {
-        let fromData = new FormData();
-        fromData.append("file", file.files[0]);
-        // 提交后端
-        profileApi(fromData).then((res) => {
-          this.url = res.imgUrl;
-          console.log(this.url);
-        });
-      }
-    },
+    // updatePhoto() {
+    //   let file = document.getElementById("file");
+    //   if (file.files.length > 0) {
+    //     let fromData = new FormData();
+    //     fromData.append("file", file.files[0]);
+    //     // 提交后端
+    //     profileApi(fromData).then((res) => {
+    //       this.url = res.imgUrl;
+    //       // console.log(this.url);
+    //     });
+    //   }
+    // },
   },
 };
 </script>
