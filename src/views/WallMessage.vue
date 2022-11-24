@@ -13,7 +13,7 @@
     <!-- 留言墙与照片墙的卡片切换  -->
     <!-- 留言墙卡片 -->
     <div class="card" :style="{ width: nwidth + 'px' }" v-show="id == 0">
-      <NoteCard v-for="(item, index) in note" :key="index" :note="item" class="card-inner" :width="'288px'" :class="{ cardSelected: index == cardSelected }" @click="selectCad(index)"></NoteCard>
+      <NoteCard v-for="(item, index) in note" :key="index" :note="item" class="card-inner" :width="'288px'" :class="{ cardSelected: index == cardSelected }" @toDetail="selectCad(index)"></NoteCard>
     </div>
     <!-- 照片墙图片 -->
     <div class="photo" v-show="id == 1">
@@ -56,7 +56,7 @@ import NewCard from "@/components/NewCard.vue";
 import CardDetail from "@/components/CardDetail.vue";
 import PhotoCard from "@/components/PhotoCard.vue";
 import PhotoView from "@/components/PhotoView.vue";
-import { photos } from "../../mock/index";
+// import { photos } from "../../mock/index";
 import lottie from "lottie-web";
 import loadingJson from "@/assets/images/loading.json";
 import { findWallPageApi } from "@/api/index";
@@ -69,7 +69,7 @@ export default {
       // id: 0, // 留言墙与照片墙的切换id
       nlabel: -1, //当前对应的标签
       note: [], //mock数据,留言墙的卡片数据
-      photos: photos.data, //照片数据
+      photos: [], //照片数据 mock
       photoArr: [], //图片数组
       nwidth: 0, //卡片模块宽度
       addBottom: 30, //add按钮bottom的变量
@@ -81,7 +81,9 @@ export default {
       none, //当前none空状态图片
       userId: "", //vuex的用户id值
       page: 1, //当前页码
-      pageSize: 5, //每页多少条
+      pageSize: 8, //每页多少条
+      pic_page: 1, //当前页码
+      pic_pageSize: 6, //每页多少条
     };
   },
   computed: {
@@ -95,7 +97,7 @@ export default {
       if (this.$route.query.id == 0) {
         data = this.note;
       } else if (this.$route.query.id == 1) {
-        data = photos.data;
+        data = this.photos;
       }
       return data;
     },
@@ -107,6 +109,21 @@ export default {
       this.isView = false;
       this.nlabel = -1;
       this.cardSelected = -1;
+      if (newVal == 0) {
+        let notePage = this.page - 1;
+        if (notePage < 1) {
+          notePage = 1;
+        }
+        this.page = notePage;
+        this.getWallCard(newVal);
+      } else {
+        let picPage = this.pic_page - 1;
+        if (picPage < 1) {
+          picPage = 1;
+        }
+        this.pic_page = picPage;
+        this.getPhotoCard(newVal);
+      }
     },
   },
   mounted() {
@@ -149,6 +166,12 @@ export default {
       this.note = [];
       this.page = 1;
       this.getWallCard(this.id);
+
+      // 图片清空
+      this.photos = [];
+      this.photoArr = [];
+      this.pic_page = 1;
+      this.getPhotoCard(this.id);
     },
     //获取note宽度
     noteWidth() {
@@ -172,19 +195,13 @@ export default {
         this.addBottom = 30;
       }
       // 加载更多留言墙数据
-      console.log(scrollTop.toFixed(0), clientHeight, contentHeight);
+      // console.log(scrollTop.toFixed(0), clientHeight, contentHeight);
       if (parseInt(scrollTop.toFixed(0)) + clientHeight == contentHeight) {
         this.getWallCard(this.id);
+        this.getPhotoCard(this.id);
       }
     },
-    // //关闭弹窗,子传父的方法
-    // close(e) {
-    //   this.modal = false;
-    // },
-    // //点击添加按钮
-    // addButton() {
-    //   this.modal = true;
-    // },
+
     //弹窗的显示与隐藏
     changeModal() {
       this.modal = !this.modal;
@@ -228,13 +245,6 @@ export default {
       }
     },
 
-    //得到纯图片数组
-    // getPhoto() {
-    //   for (let i = 0; i < this.photos.length; i++) {
-    //     this.photoArr.push(this.photos[i].imgurl);
-    //   }
-    // },
-
     //图片弹出层组件左右按钮切换
     viewSwitch(index) {
       if (index == 0) {
@@ -247,6 +257,10 @@ export default {
     clickbt(data) {
       // console.log(data);
       this.cards.unshift(data);
+      //如果是图片,加载图片链接
+      if (this.id == 1) {
+        this.photoArr.unshift(data.imgUrl);
+      }
       this.addClose(); //关闭弹窗
     },
     // loading加载动画
@@ -267,52 +281,108 @@ export default {
     // 获取卡片数据(从后端)
     getWallCard(id) {
       //只有page>0才执行
-      if (this.page > 0) {
-        this.isOk = -1; //加载中,进行数据的加载
-        let data = {
-          page: this.page,
-          pageSize: this.pageSize,
-          type: id,
-          label: this.nlabel,
-          userId: this.userId,
-        };
-        // console.log(data);
-        findWallPageApi(data).then((res) => {
-          this.note = this.note.concat(res.message);
-          // 设置下一次的page
-          // console.log(res.message);
-          if (res.message.length) {
-            this.page++; //页面加1
-          } else {
-            this.page = 0; //数据加载完了,到底部了
-          }
-
-          //状态逻辑判断
-          if (this.note.length > 0) {
-            this.isOk = 1;
-            if (this.page == 0) {
-              this.isOk = 2;
+      if (id == 0) {
+        if (this.page > 0) {
+          this.isOk = -1; //加载中,进行数据的加载
+          let data = {
+            page: this.page,
+            pageSize: this.pageSize,
+            type: id,
+            label: this.nlabel,
+            userId: this.userId,
+          };
+          // console.log(data);
+          findWallPageApi(data).then((res) => {
+            this.note = this.note.concat(res.message);
+            // 数据对象去重
+            let map = new Map();
+            for (let item of this.note) {
+              map.set(item.id, item);
             }
-          } else {
-            this.isOk = 0;
-          }
+            this.note = [...map.values()];
 
-          //如果为图片将图片单独拿出来
-          if (this.id == 1) {
-            for (let i = 0; i < this.note.length; i++) {
-              this.photoArr.push(this.note[i].imgUrl);
+            // 设置下一次的page
+            if (res.message.length) {
+              this.page++; //页面加1
+            } else {
+              this.page = 0; //数据加载完了,到底部了
             }
-          }
-        });
+
+            //状态逻辑判断
+            if (this.note.length > 0) {
+              this.isOk = 1;
+              if (this.page == 0) {
+                this.isOk = 2;
+              }
+            } else {
+              this.isOk = 0;
+            }
+          });
+        }
       }
     },
+    // 获取图片展示
+    getPhotoCard(id) {
+      if (id == 1) {
+        //只有page>0才执行
+        if (this.pic_page > 0) {
+          this.isOk = -1; //加载中,进行数据的加载
+          let data = {
+            page: this.pic_page,
+            pageSize: this.pic_pageSize,
+            type: id,
+            label: this.nlabel,
+            userId: this.userId,
+          };
+          // console.log(data);
+          findWallPageApi(data).then((res) => {
+            this.photos = this.photos.concat(res.message);
+            // 数据对象去重
+            let map = new Map();
+            for (let item of this.photos) {
+              map.set(item.id, item);
+            }
+            this.photos = [...map.values()];
+            // 设置下一次的page
+            if (res.message.length) {
+              this.pic_page++; //页面加1
+            } else {
+              this.pic_page = 0; //数据加载完了,到底部了
+            }
+
+            //状态逻辑判断
+            if (this.photos.length > 0) {
+              this.isOk = 1;
+              if (this.pic_page == 0) {
+                this.isOk = 2;
+              }
+            } else {
+              this.isOk = 0;
+            }
+
+            //如果为图片将图片单独拿出来
+            if (this.id == 1) {
+              for (let i = 0; i < this.photos.length; i++) {
+                if (this.photoArr.indexOf(this.photos[i].imgUrl) == -1) {
+                  this.photoArr.push(this.photos[i].imgUrl);
+                }
+              }
+              // console.log(this.photoArr);
+            }
+          });
+        }
+      }
+    },
+
     //获取用户id信息
     testUser() {
       setTimeout(() => {
         this.userId = this.$store.state.user.id;
         // console.log(this.userId);
         // 加载留言数据
-        this.getWallCard(0);
+        this.getWallCard(this.id);
+        // 加载照片数据
+        this.getPhotoCard(this.id);
       }, 100);
     },
   },

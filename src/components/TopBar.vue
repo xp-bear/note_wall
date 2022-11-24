@@ -8,7 +8,7 @@
       <Button :nom="getId == 0 ? 'cprimary' : 'csecondary'" class="menu-message" @click="changeWall(0)">留言墙</Button>
       <Button :nom="getId == 1 ? 'cprimary' : 'csecondary'" class="menu-photo" @click="changeWall(1)">照片墙</Button>
     </div>
-    <div class="user">
+    <div class="user" @click="Login">
       <div class="user-head"></div>
     </div>
   </div>
@@ -32,6 +32,10 @@ export default {
       this.$router.push({
         query: { id: index },
       });
+    },
+    // 点击登录
+    Login() {
+      this.$message({ type: "warning", message: "登录功能暂未开启!" });
     },
   },
   components: {
@@ -78,7 +82,9 @@ export default {
       border-radius: 50%;
       width: 36px;
       height: 36px;
-      background: linear-gradient(to right, #11998e, #38ef7d);
+      // background: linear-gradient(to right, #11998e, #38ef7d);
+      background: url("http://cdn.xxoutman.cn/logo.jpg") no-repeat center;
+      background-size: cover;
       box-shadow: 0px 0px 4px 0px rgb(0 0 0 / 10%);
     }
   }

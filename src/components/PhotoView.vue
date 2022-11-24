@@ -3,7 +3,7 @@
     <div class="PhotoView" v-if="isView">
       <div class="bg"></div>
       <div class="viewer-photo">
-        <img :src="require('../../static/' + photos[nowNumber] + '.jpg')" alt="" class="photo-img" />
+        <img :src="photos[nowNumber]" alt="" class="photo-img" />
       </div>
       <!-- 左右两边按钮 -->
       <div class="switch sw-left" @click="changeNumber(0)" v-show="nowNumber > 0">

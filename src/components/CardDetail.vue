@@ -8,25 +8,27 @@
     <NoteCard :note="card" class="note-card"></NoteCard>
     <!-- 输入框文本域 -->
     <div class="form">
-      <textarea placeholder="请输入评论内容…" class="title-menu-min"></textarea>
+      <textarea placeholder="请输入评论内容…" class="title-menu-min" v-model="disscuss"></textarea>
       <div class="bt">
-        <input type="text" value="匿名" />
-        <Button>评论</Button>
+        <input type="text" v-model="name" />
+        <Button :class="{ notallowed: !isDis }" @click="submit">评论</Button>
       </div>
     </div>
     <!-- 品论 -->
-    <p class="title">评论 {{ card.comment }}</p>
+    <p class="title">评论 {{ cards.comcount[0].count }}</p>
     <div class="comment">
       <div class="comment-li" v-for="(item, index) in comments" :key="index">
-        <div class="user-head" :style="{ backgroundImage: portrait[item.imgurl] }"></div>
+        <div class="user-head" :style="{ backgroundImage: portrait[item.imgUrl] }"></div>
+        <!-- <div class="user-head"><img :src="rocoImg[item.imgUrl]" alt="" /></div> -->
         <div class="comment-m">
           <div class="m-top">
             <p class="name">{{ item.name }}</p>
             <p class="time">{{ dateOne(item.moment) }}</p>
           </div>
-          <div class="m-bottom title-menu-min">{{ item.message }}</div>
+          <div class="m-bottom title-menu-min">{{ item.comment }}</div>
         </div>
       </div>
+      <p class="more" @click="getComment()" v-show="page > 0">加载更多</p>
     </div>
   </div>
 </template>
@@ -34,21 +36,96 @@
 <script>
 import NoteCard from "@/components/NoteCard.vue";
 import Button from "@/components/Button.vue";
-import { comments } from "../../mock/index";
-import { portrait } from "@/utils/data";
+// import { comments } from "../../mock/index";
+import { portrait, rocoImg } from "@/utils/data";
 import { dateOne } from "@/utils/time_format";
+import { insertCommentApi, findCommentPageApi } from "@/api/index";
 export default {
   name: "CardDetail",
   data() {
     return {
-      comments: comments.data, //评论数组
-      portrait, //背景头像
+      comments: [], //评论数组
+      portrait, //背景头像 []
+      rocoImg, //洛克头像背景
+      disscuss: "", //输入的内容,
+      name: "匿名", //评论姓名
+      // isDis: true, //按钮不可以点击,
+      page: 1, //当前页
+      pageSize: 8, //一页多少条
     };
   },
-  methods: { dateOne },
+  mounted() {
+    this.getComment();
+  },
+  methods: {
+    dateOne,
+    // 提交评论
+    submit() {
+      if (this.isDis) {
+        //如果有用户就用头像，没有就用随机头像
+        let img = Math.floor(Math.random() * 14);
+        let data = {
+          wallId: this.cards.id,
+          userId: this.$store.state.user.id,
+          imgUrl: img,
+          comment: this.disscuss, //评论
+          name: this.name,
+          moment: new Date(),
+        };
+        console.log(data);
+        insertCommentApi(data).then((res) => {
+          this.comments.unshift(data);
+          this.cards.comcount[0].count++;
+        });
+        // 清空评论框
+        this.disscuss = "";
+        // this.$message({ type: "success", message: "发送成功!" });
+      }
+    },
+    // 获取评论
+    getComment() {
+      if (this.page > 0) {
+        let data = {
+          page: this.page,
+          pageSize: this.pageSize,
+          id: this.cards.id,
+        };
+        findCommentPageApi(data).then((res) => {
+          this.comments = this.comments.concat(res.message);
+          // 设置下一次的page
+          if (res.message.length == this.pageSize) {
+            this.page++;
+          } else {
+            this.page = 0;
+          }
+        });
+      }
+    },
+  },
   props: {
     card: {
       default: {},
+    },
+  },
+  computed: {
+    isDis() {
+      if (this.disscuss.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    },
+    // 获取修改卡片数据
+    cards() {
+      return this.card;
+    },
+  },
+  watch: {
+    // 监听卡片变化
+    card() {
+      this.page = 1;
+      this.comments = [];
+      this.getComment();
     },
   },
   components: {
@@ -126,7 +203,7 @@ export default {
     padding-bottom: 20px;
   }
   .comment {
-    padding-bottom: 100px;
+    padding-bottom: 120px;
     .comment-li {
       width: 100%;
       display: flex;
@@ -137,6 +214,12 @@ export default {
         height: 28px;
         border-radius: 50%;
         margin-right: 8px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        img {
+          width: 28px;
+        }
       }
       .comment-m {
         .m-top {
@@ -167,6 +250,17 @@ export default {
         }
       }
     }
+    .more {
+      color: @gray-2;
+      text-align: center;
+      cursor: pointer;
+      padding: 20px;
+    }
+  }
+  .notallowed {
+    opacity: 0.6;
+    cursor: not-allowed;
+    font-family: "xp";
   }
 }
 </style>

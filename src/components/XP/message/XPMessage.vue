@@ -5,7 +5,7 @@
       <div class="m-i">
         <i class="iconfont" :class="style[type].icon"></i>
         <span class="text">{{ message }}</span>
-        <i class="iconfont icon-guanbi"></i>
+        <i class="iconfont icon-guanbi" @click="msgClose"></i>
       </div>
     </div>
   </transition>
@@ -49,16 +49,16 @@ export default {
       }, 3000);
     });
     // 关闭按钮提示框
-    // const msgClose = () => {
-    //   isShow.value = false;
-    //   setTimeout(() => {
-    //     isShow.value = true;
-    //   }, 3000);
-    // };
+    const msgClose = () => {
+      isShow.value = false;
+      setTimeout(() => {
+        isShow.value = true;
+      }, 3000);
+    };
     return {
       style,
       isShow,
-      // msgClose,
+      msgClose,
     };
   },
 };
@@ -92,7 +92,7 @@ export default {
       color: red;
       margin: 0;
       text-align: right;
-      font-size: 14px;
+      font-size: 12px;
     }
     .text {
       margin-right: 20px;

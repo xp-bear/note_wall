@@ -1,10 +1,10 @@
 <template>
   <div class="PhotoCard">
-    <img :src="require('../../static/' + photo.imgurl + '.jpg')" alt="" class="photo-img" />
+    <img :src="photo.imgUrl" alt="" class="photo-img" />
     <div class="photo-bg"></div>
     <div class="photo-like">
       <span class="iconfont icon-aixin1"></span>
-      <span class="like-data">{{ photo.like }}</span>
+      <span class="like-data">{{ photo.like[0].count }}</span>
     </div>
   </div>
 </template>

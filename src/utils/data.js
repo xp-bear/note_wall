@@ -11,8 +11,8 @@ export const wallType = [
 ];
 //分类标签
 export const label = [
-  ["留言", "目标", "理想", "过去", "将来", "爱情", "亲情", "友情", "秘密", "信条", "无题"],
-  ["我", "ta", "喜欢的", "有意义的", "值得纪念的", "母校", "生活", "天空", "我在的城市", "大海", "无题"],
+  ["留言", "目标", "梦想", "过去", "将来", "爱情", "亲情", "友情", "秘密", "信条", "无题"],
+  ["我", "那个ta", "生活", "喜欢的", "值得纪念的", "我在的城市", "母校", "天空", "大海", "无题"],
 ];
 
 //卡片背景色
@@ -36,6 +36,30 @@ export const portrait = [
   "linear-gradient(180deg,#FFED48 0%,#FD9E16 100%)",
   "linear-gradient(180deg,#FFDC83 0%,#3b73f0 100%)",
   "linear-gradient(180deg,#FFBA8D 1%,#EB6423 100%)",
+];
+
+export const rocoImg = [
+  "http://cdn.xxoutman.cn/roco/1.png",
+  "http://cdn.xxoutman.cn/roco/2.png",
+  "http://cdn.xxoutman.cn/roco/3.png",
+  "http://cdn.xxoutman.cn/roco/4.png",
+  "http://cdn.xxoutman.cn/roco/5.png",
+  "http://cdn.xxoutman.cn/roco/6.png",
+  "http://cdn.xxoutman.cn/roco/7.png",
+  "http://cdn.xxoutman.cn/roco/8.png",
+  "http://cdn.xxoutman.cn/roco/9.png",
+  "http://cdn.xxoutman.cn/roco/10.png",
+  "http://cdn.xxoutman.cn/roco/11.png",
+  "http://cdn.xxoutman.cn/roco/12.png",
+  "http://cdn.xxoutman.cn/roco/13.png",
+  "http://cdn.xxoutman.cn/roco/14.png",
+  "http://cdn.xxoutman.cn/roco/15.png",
+  "http://cdn.xxoutman.cn/roco/16.png",
+  "http://cdn.xxoutman.cn/roco/17.png",
+  "http://cdn.xxoutman.cn/roco/18.png",
+  "http://cdn.xxoutman.cn/roco/19.png",
+  "http://cdn.xxoutman.cn/roco/20.png",
+  "http://cdn.xxoutman.cn/roco/21.png",
 ];
 
 // 照片墙或者留言墙为空的时候,加载的空状态

@@ -1,19 +1,19 @@
 <template>
-  <div class="note-card" :style="{ width: width, background: cardColor[card.color] }">
+  <div class="note-card" :style="{ width: width, background: id == 0 ? cardColor[card.color] : cardColor[5] }">
     <div cLass="top">
       <p class="time">{{ dateOne(card.moment) }}</p>
       <p class="label">{{ label[card.type][card.label] }}</p>
     </div>
-    <p class="message title-menu-min">{{ card.message }}</p>
+    <p class="message title-menu-min" @click="toDetail">{{ card.message }}</p>
     <div class="foot">
       <div class="footer-left">
-        <div class="icon">
+        <div class="icon" @click="clickLike">
           <span class="iconfont icon-aixin1" :class="{ isLike: card.islike[0].count > 0 }"></span>
           <span class="value">{{ card.like[0].count }}</span>
         </div>
-        <div class="icon">
+        <div class="icon" v-show="card.comcount[0].count > 0">
           <span class="iconfont icon-liuyan"></span>
-          <span class="value">{{ card.comment }}</span>
+          <span class="value">{{ card.comcount[0].count }}</span>
         </div>
       </div>
       <div class="name">{{ card.name }}</div>
@@ -24,6 +24,7 @@
 <script>
 import { label, cardColor } from "@/utils/data";
 import { dateOne } from "@/utils/time_format";
+import { insertFeedBackApi } from "@/api/index";
 export default {
   name: "NoteCard",
   props: {
@@ -39,9 +40,33 @@ export default {
     card() {
       return this.note;
     },
+    // 获取到id的值的改变
+    id() {
+      return this.$route.query.id;
+    },
   },
   methods: {
     dateOne,
+    //显示详情
+    toDetail() {
+      this.$emit("toDetail");
+    },
+    // 点击喜欢爱心+1
+    clickLike() {
+      // 判断是否点击过
+      if (this.card.like[0].count == 0) {
+        let data = {
+          wallId: this.card.id,
+          userId: this.$store.state.user.id,
+          type: 0,
+          moment: new Date(),
+        };
+        insertFeedBackApi(data).then((res) => {
+          // card.like[0].count
+          this.card.like[0].count++;
+        });
+      }
+    },
   },
   created() {
     // console.log(this.card);
@@ -84,6 +109,7 @@ export default {
     letter-spacing: 0.5px;
     overflow-x: hidden;
     overflow-y: auto;
+    cursor: pointer;
   }
   .foot {
     width: 100%;
