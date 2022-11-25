@@ -8,7 +8,7 @@
     <div class="foot">
       <div class="footer-left">
         <div class="icon" @click="clickLike">
-          <span class="iconfont icon-aixin1" :class="{ isLike: card.islike[0].count > 0 }"></span>
+          <span class="iconfont icon-aixin1" :class="getIsLike()"></span>
           <span class="value">{{ card.like[0].count }}</span>
         </div>
         <div class="icon" v-show="card.comcount[0].count > 0">
@@ -51,6 +51,13 @@ export default {
     toDetail() {
       this.$emit("toDetail");
     },
+    //改变颜色
+    getIsLike() {
+      if (this.card.islike[0].count == 1) {
+        return { isLike: true };
+      }
+      return { isLike: false };
+    },
     // 点击喜欢爱心+1
     clickLike() {
       // 判断是否点击过
@@ -60,7 +67,7 @@ export default {
       };
       // 判断当前ip地址有没有点击过爱心
       likeCountApi(likeData).then((res) => {
-        // console.log(res.message[0].count); 是否点击过爱心
+        console.log(res.message[0].count, this.card); //是否点击过爱心
         if (res.message[0].count == 0) {
           let data = {
             wallId: this.card.id,

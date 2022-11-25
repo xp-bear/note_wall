@@ -81,7 +81,7 @@ export const rocoImg = [
 export const none = [
   {
     url: "http://cdn.xxoutman.cn/note2.png",
-    msg: "还没有留言,快写上第一张吧!",
+    msg: "还没有留言,快写上第一条吧!",
   },
   {
     url: "http://cdn.xxoutman.cn/photo2.png",
