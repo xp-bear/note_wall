@@ -24,7 +24,7 @@
 <script>
 import { label, cardColor } from "@/utils/data";
 import { dateOne } from "@/utils/time_format";
-import { insertFeedBackApi } from "@/api/index";
+import { insertFeedBackApi, likeCountApi } from "@/api/index";
 export default {
   name: "NoteCard",
   props: {
@@ -54,29 +54,27 @@ export default {
     // 点击喜欢爱心+1
     clickLike() {
       // 判断是否点击过
-      // console.log(this.card, this.$store.state.user.id);
-      if (this.card.userId == this.$store.state.user.id) {
-        this.card.islike[0].count = 1;
-        return this.$message({ type: "warning", message: "不可以对自己留言点赞!" });
-      }
-      // console.log(this.card.islike[0].count);
-      // 是否点击过,根据ip地址
-      if (this.card.islike[0].count == 0) {
-        let data = {
-          wallId: this.card.id,
-          userId: this.$store.state.user.id,
-          type: 0,
-          moment: new Date(),
-        };
-        insertFeedBackApi(data).then((res) => {
-          // card.like[0].count
-          this.card.like[0].count++;
-          this.card.islike[0].count = 1;
-        });
-        // console.log(this.card);
-      } else if (this.card.islike[0].count == 1) {
-        // console.log("已经点击过");
-      }
+      let likeData = {
+        wid: this.card.id,
+        uid: this.$store.state.user.id,
+      };
+      // 判断当前ip地址有没有点击过爱心
+      likeCountApi(likeData).then((res) => {
+        // console.log(res.message[0].count); 是否点击过爱心
+        if (res.message[0].count == 0) {
+          let data = {
+            wallId: this.card.id,
+            userId: this.$store.state.user.id,
+            type: 0,
+            moment: new Date(),
+          };
+          insertFeedBackApi(data).then((res) => {
+            // console.log(res);
+            this.card.like[0].count++;
+            this.card.islike[0].count = 1;
+          });
+        }
+      });
     },
   },
   created() {

@@ -21,3 +21,6 @@ export const findCommentPageApi = (data) => service.post("/findcommentpage", dat
 
 // 上传图片
 export const profileApi = (data) => service.post("/profile", data);
+
+// 是否点击爱心
+export const likeCountApi = (data) => service.post("/likecount", data);

@@ -6,7 +6,7 @@
         <span>熊仔留言墙</span>
       </div>
       <p class="footer-info">
-        熊仔留言墙是萧兮独自开发的，为便于与用户交流的留言平台。
+        熊仔留言墙是本人独自开发的，为便于与用户交流的留言平台。
         <br />
         <br />
         用户将留言便签贴在留言墙上，用户可以自定义便签颜色和内容属性，不仅可以用于交流，也是一场记录。
@@ -17,13 +17,13 @@
     <div class="center">
       <span class="center-title">友情链接</span>
       <div class="center-link">
-        <div>
-          <a href="http://xxoutman.cn/" target="_blank">熊仔音乐</a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://150.158.21.251:3000/" target="_blank">聊天室</a>&nbsp;&nbsp;&nbsp;&nbsp;
-          <a href="http://flask.xxoutman.cn/" target="_blank">flask博客</a>
-        </div>
+        <div><a href="http://xxoutman.cn/" target="_blank">熊仔音乐</a>&nbsp;&nbsp;&nbsp;&nbsp; <a href="http://150.158.21.251:3000/" target="_blank">网页聊天室</a>&nbsp;&nbsp;&nbsp;&nbsp;</div>
         <div>
           <a href="http://blog.xxoutman.cn/" target="_blank">熊仔笔记官网</a>&nbsp;&nbsp;&nbsp;&nbsp;
-          <a href="http://150.158.21.251:3300/" target="_blank">熊仔资源</a>
+          <a href="http://150.158.21.251:8080/" target="_blank">后台管理系统</a>
+        </div>
+        <div>
+          <a href="http://150.158.21.251:4000/" target="_blank">网易云音乐API</a>
         </div>
       </div>
     </div>
