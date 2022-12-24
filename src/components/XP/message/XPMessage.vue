@@ -46,7 +46,7 @@ export default {
       isShow.value = true;
       setTimeout(() => {
         isShow.value = false;
-      }, 3000);
+      }, 2000);
     });
     // 关闭按钮提示框
     const msgClose = () => {

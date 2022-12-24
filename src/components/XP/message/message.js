@@ -10,9 +10,9 @@ const XP_Message = ({ message, type }) => {
   const comVNode = createVNode(XPMessage, { message, type });
   //2.宣染到body页面中-render函数
   render(comVNode, div);
-  //3.提示在6s后自动卸载
+  //3.提示在4s后自动卸载
   setTimeout(() => {
     render(null, div);
-  }, 6000);
+  }, 4000);
 };
 export default XP_Message;

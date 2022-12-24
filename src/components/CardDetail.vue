@@ -1,8 +1,10 @@
 <template>
   <div class="CardDetail">
     <div class="top-bt">
-      <p class="revoke">联系墙主撕掉该便签</p>
-      <p class="report">举报</p>
+      <p class="revoke" @click="informAdmin">联系墙主撕掉该便签</p>
+      <p class="report" v-show="idDeleteBool == 0">举报</p>
+      <p class="report" v-show="idDeleteBool == 1" @click="toDeleteWall">删除留言</p>
+      <p class="report" v-show="idDeleteBool == 2" @click="toDeletePhoto">删除照片</p>
     </div>
     <!-- 卡片组件 -->
     <NoteCard :note="card" class="note-card"></NoteCard>
@@ -39,7 +41,7 @@ import Button from "@/components/Button.vue";
 // import { comments } from "../../mock/index";
 import { portrait, rocoImg } from "@/utils/data";
 import { dateOne } from "@/utils/time_format";
-import { insertCommentApi, findCommentPageApi } from "@/api/index";
+import { insertCommentApi, findCommentPageApi, deleteWallApi } from "@/api/index";
 export default {
   name: "CardDetail",
   data() {
@@ -51,7 +53,7 @@ export default {
       name: "匿名", //评论姓名
       // isDis: true, //按钮不可以点击,
       page: 1, //当前页
-      pageSize: 8, //一页多少条
+      pageSize: 10, //一页多少条评论
     };
   },
   mounted() {
@@ -101,10 +103,51 @@ export default {
         });
       }
     },
+    //删除留言
+    toDeleteWall() {
+      // console.log("删除留言");
+      // console.log(this.idDeleteObj.DeleteIndex);
+
+      // 子传父删除留言事件
+      this.$emit("deleteCard", this.idDeleteObj.DeleteIndex);
+
+      let data = {
+        id: this.cards.id,
+      };
+      deleteWallApi(data).then((res) => {
+        // console.log(res);
+      });
+    },
+    //删除照片。
+    toDeletePhoto() {
+      // console.log(this.idDeleteObj);
+      // console.log(this.cards);
+      // 子传父删除照片事件
+      this.$emit("deletePhoto", this.idDeleteObj.DeleteIndex);
+
+      let data = {
+        id: this.cards.id,
+      };
+      deleteWallApi(data).then((res) => {
+        // console.log(res);
+      });
+    },
+    //联系墙主删除便签。
+    informAdmin() {
+      this.$message({ type: "success", message: "已成功通知墙主，撕掉便签。" });
+    },
   },
   props: {
     card: {
       default: {},
+    },
+    idDeleteObj: {
+      //是否显示删除
+      default: {},
+      // idDeleteObj: {
+      //   DeleteIndex: 0, //在卡片中的索引位置
+      //   isDelete: 0, //判断是不是该用户的留言,显示删除选项  0-举报  1-删除
+      // },
     },
   },
   computed: {
@@ -118,6 +161,10 @@ export default {
     // 获取修改卡片数据
     cards() {
       return this.card;
+    },
+    //是否显示删除
+    idDeleteBool() {
+      return this.idDeleteObj.isDelete;
     },
   },
   watch: {

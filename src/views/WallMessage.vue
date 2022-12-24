@@ -41,7 +41,7 @@
       <!-- 新建卡片组件 -->
       <NewCard :id="id" @addClose="addClose()" v-if="cardSelected == -1" @clickbt="clickbt"></NewCard>
       <!-- 这里弹出层要区分是留言墙还是照片墙的数据 -->
-      <CardDetail :card="cards[cardSelected]" v-else="cardSelected !== -1"></CardDetail>
+      <CardDetail :card="cards[cardSelected]" v-else="cardSelected !== -1" :idDeleteObj="idDeleteObj" @deleteCard="deleteCard" @deletePhoto="deletePhoto"></CardDetail>
     </Modal>
     <!-- 照片弹出层 -->
     <PhotoView :isView="isView" :photos="photoArr" :nowNumber="cardSelected" @viewSwitch="viewSwitch"></PhotoView>
@@ -69,8 +69,8 @@ export default {
       // id: 0, // 留言墙与照片墙的切换id
       nlabel: -1, //当前对应的标签
       note: [], //mock数据,留言墙的卡片数据
-      photos: [], //照片数据 mock
-      photoArr: [], //图片数组
+      photos: [], //照片数据数据
+      photoArr: [], //图片数组url
       nwidth: 0, //卡片模块宽度
       addBottom: 30, //add按钮bottom的变量
       title: "写留言", //新建标题
@@ -84,6 +84,10 @@ export default {
       pageSize: 10, //每页多少条
       pic_page: 1, //当前页码
       pic_pageSize: 10, //每页多少条
+      idDeleteObj: {
+        DeleteIndex: 0, //在卡片中的索引位置
+        isDelete: 0, //判断是不是该用户的留言,显示删除选项  0-举报  1-删除
+      },
     };
   },
   computed: {
@@ -222,6 +226,29 @@ export default {
     },
     //选择对应的卡片
     selectCad(index) {
+      // console.log(this.note[index].userId, this.$store.state.user.id);// 取出对应的卡片数据
+      if (this.id == 0) {
+        if (this.note[index].userId == this.$store.state.user.id) {
+          // 是自己的卡片
+          this.idDeleteObj.isDelete = 1;
+          this.idDeleteObj.DeleteIndex = index;
+        } else {
+          this.idDeleteObj.isDelete = 0;
+          this.idDeleteObj.DeleteIndex = 0;
+        }
+      } else {
+        // 照片墙
+        // console.log(this.photos, this.$store.state.user.id);
+        if (this.photos[index].userId == this.$store.state.user.id) {
+          // 是自己的卡片
+          this.idDeleteObj.isDelete = 2; //删除照片
+          this.idDeleteObj.DeleteIndex = index;
+        } else {
+          this.idDeleteObj.isDelete = 0;
+          this.idDeleteObj.DeleteIndex = 0;
+        }
+      }
+
       if (index != this.cardSelected) {
         this.cardSelected = index;
         this.modal = true;
@@ -232,6 +259,7 @@ export default {
       } else {
         this.cardSelected = -1;
         this.modal = false;
+
         // 隐藏照片弹出层
         if (this.id == 1) {
           this.isView = false;
@@ -249,8 +277,26 @@ export default {
     viewSwitch(index) {
       if (index == 0) {
         this.cardSelected--;
+        // console.log(this.photos[this.cardSelected]);
+        if (this.photos[this.cardSelected].userId == this.$store.state.user.id) {
+          // 是自己的卡片
+          this.idDeleteObj.isDelete = 2; //删除照片
+          this.idDeleteObj.DeleteIndex = index;
+        } else {
+          this.idDeleteObj.isDelete = 0;
+          this.idDeleteObj.DeleteIndex = 0;
+        }
       } else {
         this.cardSelected++;
+        // console.log(this.photos[this.cardSelected]);
+        if (this.photos[this.cardSelected].userId == this.$store.state.user.id) {
+          // 是自己的卡片
+          this.idDeleteObj.isDelete = 2; //删除照片
+          this.idDeleteObj.DeleteIndex = index;
+        } else {
+          this.idDeleteObj.isDelete = 0;
+          this.idDeleteObj.DeleteIndex = 0;
+        }
       }
     },
     // newCard传递过来的数据,进行插入
@@ -387,6 +433,26 @@ export default {
         this.getPhotoCard(this.id);
       }, 100);
     },
+
+    //子传父删除卡片数据。
+    deleteCard(index) {
+      // console.log("子传父: ", index);
+      this.note.splice(index, 1);
+      this.modal = false; //关闭弹窗
+      this.$message({ type: "success", message: "删除留言成功~" });
+      this.cardSelected = -1;
+    },
+    // 子传赋删除照片数据。
+    deletePhoto(index) {
+      this.modal = false; //关闭弹窗
+      this.isView = false;
+
+      this.photos.splice(index, 1);
+      this.photoArr.splice(index, 1);
+
+      this.$message({ type: "success", message: "删除照片成功~" });
+      this.cardSelected = -1;
+    },
   },
   components: {
     NoteCard,
@@ -500,7 +566,8 @@ export default {
   .add {
     width: 56px;
     height: 56px;
-    background: #202020;
+    // background: #202020;
+    background: #3b73f0;
     box-shadow: 0px 4px 8px 0px rgba(0, 0, 0, 0.08);
     border-radius: 28px;
     display: flex;

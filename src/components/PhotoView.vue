@@ -9,7 +9,7 @@
       <div class="switch sw-left" @click="changeNumber(0)" v-show="nowNumber > 0">
         <span class="iconfont icon-xiangzuo"></span>
       </div>
-      <div class="switch sw-right" @click="changeNumber(1)" v-show="nowNumber < photos.length-1">
+      <div class="switch sw-right" @click="changeNumber(1)" v-show="nowNumber < photos.length - 1">
         <span class="iconfont icon-xiangyou"></span>
       </div>
     </div>

@@ -24,3 +24,6 @@ export const profileApi = (data) => service.post("/profile", data);
 
 // 是否点击爱心
 export const likeCountApi = (data) => service.post("/likecount", data);
+
+//删除留言
+export const deleteWallApi = (data) => service.post("/deletewall", data);
