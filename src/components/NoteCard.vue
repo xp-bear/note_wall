@@ -128,6 +128,7 @@ export default {
     overflow-x: hidden;
     overflow-y: auto;
     cursor: pointer;
+    white-space: pre-wrap; //在 vue 项目，有时请求返回的数据 中会有含有 \n 的字符串，如果直接渲染的话无法实现换行。
   }
   .foot {
     width: 100%;

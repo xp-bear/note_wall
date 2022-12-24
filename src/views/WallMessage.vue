@@ -294,7 +294,7 @@ export default {
           };
           // console.log(data);
           findWallPageApi(data).then((res) => {
-            console.log(res);
+            // console.log(res);
             this.note = this.note.concat(res.message);
             // 数据对象去重
             let map = new Map();
