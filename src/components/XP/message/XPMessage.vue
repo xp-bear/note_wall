@@ -50,10 +50,10 @@ export default {
     });
     // 关闭按钮提示框
     const msgClose = () => {
-      isShow.value = false;
-      setTimeout(() => {
-        isShow.value = true;
-      }, 3000);
+      // isShow.value = false;
+      // setTimeout(() => {
+      //   isShow.value = true;
+      // }, 3000);
     };
     return {
       style,

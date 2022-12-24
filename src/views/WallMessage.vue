@@ -81,9 +81,9 @@ export default {
       none, //当前none空状态图片
       userId: "", //vuex的用户id值
       page: 1, //当前页码
-      pageSize: 8, //每页多少条
+      pageSize: 10, //每页多少条
       pic_page: 1, //当前页码
-      pic_pageSize: 6, //每页多少条
+      pic_pageSize: 10, //每页多少条
     };
   },
   computed: {
@@ -294,6 +294,7 @@ export default {
           };
           // console.log(data);
           findWallPageApi(data).then((res) => {
+            console.log(res);
             this.note = this.note.concat(res.message);
             // 数据对象去重
             let map = new Map();

@@ -101,4 +101,24 @@ export default {
   // src: url("@/assets/fonts/two.ttf");
   src: url("http://cdn.xxoutman.cn/two.ttf");
 }
+#shade {
+  font-weight: 900;
+  font-size: 16px;
+  color: black;
+  background: -webkit-linear-gradient(right, #70f7fe, #fbd7c6, #fdefac, #bfb5dd, #bed5f5, #70f7fe);
+  color: transparent;
+  /*设置字体颜色透明*/
+  -webkit-background-clip: text;
+  /*背景裁剪为文本形式*/
+  animation: ran 30s linear infinite;
+  /*动态10s展示*/
+}
+@keyframes ran {
+  from {
+    backgroud-position: 0 0;
+  }
+  to {
+    background-position: 2000px 0;
+  }
+}
 </style>

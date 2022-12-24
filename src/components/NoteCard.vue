@@ -62,18 +62,20 @@ export default {
     clickLike() {
       // 判断是否点击过
       let likeData = {
-        wid: this.card.id,
-        uid: this.$store.state.user.id,
+        wid: this.card.id, //当前卡片的id
+        uid: this.$store.state.user.id, //当前登录的ip用户
       };
       // 判断当前ip地址有没有点击过爱心
       likeCountApi(likeData).then((res) => {
-        console.log(res.message[0].count, this.card); //是否点击过爱心
+        // console.log(res.message[0].count, this.card); //是否点击过爱心
+        console.log(res, likeData); //是否点击过爱心
+
         if (res.message[0].count == 0) {
           let data = {
-            wallId: this.card.id,
-            userId: this.$store.state.user.id,
-            type: 0,
-            moment: new Date(),
+            wallId: this.card.id, //当前卡片的id
+            userId: this.$store.state.user.id, //当前登录的ip用户
+            type: 0, //喜欢
+            moment: new Date(), //时间
           };
           insertFeedBackApi(data).then((res) => {
             // console.log(res);

@@ -177,7 +177,7 @@ export default {
               this.$emit("clickbt", cradD); //告诉父组件,新建一张卡片
               this.message = "";
               this.url = "";
-              this.$message({ type: "success", message: "新增留言成功!" });
+              this.$message({ type: "success", message: "新增照片成功!" });
             });
           });
         }
