@@ -15,5 +15,5 @@ export const dateOne = (e) => {
   hh < 10 ? (hh = "0" + hh) : hh;
   mm < 10 ? (mm = "0" + mm) : mm;
   ss < 10 ? (ss = "0" + ss) : ss;
-  return `${Y}.${M}.${D}  ${hh}:${mm}`;
+  return `${Y}/${M}/${D}  ${hh}:${mm}`;
 };
