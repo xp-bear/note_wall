@@ -81,9 +81,9 @@ export default {
       none, //当前none空状态图片
       userId: "", //vuex的用户id值
       page: 1, //当前页码
-      pageSize: 10, //每页多少条
+      pageSize: 15, //每页多少条留言
       pic_page: 1, //当前页码
-      pic_pageSize: 10, //每页多少条
+      pic_pageSize: 10, //每页多少条图片
       idDeleteObj: {
         DeleteIndex: 0, //在卡片中的索引位置
         isDelete: 0, //判断是不是该用户的留言,显示删除选项  0-举报  1-删除
