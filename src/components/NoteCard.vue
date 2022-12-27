@@ -63,12 +63,12 @@ export default {
       // 判断是否点击过
       let likeData = {
         wid: this.card.id, //当前卡片的id
-        uid: this.$store.state.user.id, //当前登录的ip用户
+        uid: this.$store.state.user.id, //当前登录的ip用户 150.12.16.18
       };
       // 判断当前ip地址有没有点击过爱心
       likeCountApi(likeData).then((res) => {
         // console.log(res.message[0].count, this.card); //是否点击过爱心
-        console.log(res, likeData); //是否点击过爱心
+        // console.log(res, likeData); //是否点击过爱心
 
         if (res.message[0].count == 0) {
           let data = {
@@ -82,11 +82,29 @@ export default {
             this.card.like[0].count++;
             this.card.islike[0].count = 1;
           });
+        } else {
+          this.card.islike[0].count = 1;
         }
       });
     },
   },
   created() {
+    // 判断是否点击过
+    let likeData = {
+      wid: this.card.id, //当前卡片的id
+      uid: this.$store.state.user.id, //当前登录的ip用户 150.12.16.18
+    };
+    // 判断当前ip地址有没有点击过爱心
+    likeCountApi(likeData).then((res) => {
+      // console.log(res.message[0].count, this.card); //是否点击过爱心
+      // console.log(res, likeData); //是否点击过爱心
+
+      if (res.message[0].count == 0) {
+        this.card.islike[0].count = 0;
+      } else {
+        this.card.islike[0].count = 1;
+      }
+    });
     // console.log(this.card);
   },
   data() {
