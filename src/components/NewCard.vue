@@ -21,7 +21,10 @@
         </svg>
       </div>
       <!-- 显示选择的图片 -->
-      <div class="photo-div"><img :src="url" /></div>
+      <div class="photo-div">
+        <video v-show="isVideoUrl" id="video" :src="url" autoplay muted loop style="width: 100%"></video>
+        <img v-show="!isVideoUrl" :src="url" />
+      </div>
     </div>
 
     <!-- 新建卡片 -->
@@ -82,6 +85,7 @@ export default {
       message: "", //留言信息
       sign: "", //签名
       url: "", //上传图片链接
+      isVideoUrl: false, //是不是视频链接地址
     };
   },
   props: {
@@ -182,13 +186,24 @@ export default {
           });
         }
       }
+
+      //检测是不是上传的视频
+      if (this.isVideoUrl) {
+        this.$message({ type: "success", message: "正在上传视频中,请勿重复点击!" });
+      }
     },
     // 上传图片临时链接显示
     showPhoto() {
+      let type = document.getElementById("file").files[0].type;
+      // console.log(type); //上传文件类型
+      if (type.includes("mp4") || type.includes("avi") || type.includes("wmv") || type.includes("mov")) {
+        this.isVideoUrl = true;
+      }
       let aa = getObjectURL(document.getElementById("file").files[0]);
       // console.log(aa);
       this.url = aa;
     },
+
     // 鼠标经过,显示修改上传图标的背景
     moveChange() {
       this.$refs.changeIcon ? (this.$refs.changeIcon.style.backgroundColor = "#ffffff90") : "";

@@ -1,6 +1,8 @@
 <template>
   <div class="PhotoCard">
-    <img :src="photo.imgUrl" alt="" class="photo-img" />
+    <video v-if="this.photo.imgUrl.includes('.mp4')" :src="photo.imgUrl" autoplay muted loop class="photo-img"></video>
+    <img v-else :src="photo.imgUrl" alt="" class="photo-img" />
+
     <div class="photo-bg"></div>
     <div class="photo-like" @click.stop="ckPhoto">
       <span class="iconfont icon-aixin1" :class="getIsLike()"></span>

@@ -6,7 +6,7 @@ import { baseUrl } from "./env";
 // 创建一个实例
 const service = axios.create({
   baseURL: baseUrl,
-  timeout: 5000,
+  // timeout: 5000,
 });
 
 //添加请求拦截器

@@ -3,7 +3,8 @@
     <div class="PhotoView" v-if="isView">
       <div class="bg"></div>
       <div class="viewer-photo">
-        <img :src="photos[nowNumber]" alt="" class="photo-img" />
+        <video v-if="photos[nowNumber].includes('.mp4')" :src="photos[nowNumber]" autoplay loop controls class="photo-img"></video>
+        <img v-else :src="photos[nowNumber]" alt="" class="photo-img" />
       </div>
       <!-- 左右两边按钮 -->
       <div class="switch sw-left" @click="changeNumber(0)" v-show="nowNumber > 0">
@@ -75,6 +76,10 @@ export default {
     overflow: auto;
     text-align: center;
     img {
+      display: inline-block;
+      max-width: 100%;
+    }
+    video {
       display: inline-block;
       max-width: 100%;
     }

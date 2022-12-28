@@ -195,7 +195,7 @@ export default {
       let clientHeight = document.documentElement.clientHeight;
       //内容高度
       let contentHeight = document.documentElement.scrollHeight;
-      console.log("距离顶部的高度: ", Math.floor(scrollTop), "可视化区域高度: ", Math.floor(clientHeight), "内容高度: ", Math.floor(contentHeight));
+      // console.log("距离顶部的高度: ", Math.floor(scrollTop), "可视化区域高度: ", Math.floor(clientHeight), "内容高度: ", Math.floor(contentHeight));
 
       //做判断,代表我已经滚动到了底部footer与内容之间的距离
       if (scrollTop + clientHeight + 200 >= contentHeight) {
