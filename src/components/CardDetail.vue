@@ -41,7 +41,7 @@ import Button from "@/components/Button.vue";
 // import { comments } from "../../mock/index";
 import { portrait, rocoImg, avatarImg } from "@/utils/data";
 import { dateOne } from "@/utils/time_format";
-import { insertCommentApi, findCommentPageApi, deleteWallApi } from "@/api/index";
+import { insertCommentApi, findCommentPageApi, deleteWallApi, deletePhotoApi } from "@/api/index";
 export default {
   name: "CardDetail",
   data() {
@@ -131,6 +131,14 @@ export default {
         id: this.cards.id,
       };
       deleteWallApi(data).then((res) => {
+        // console.log(res);
+      });
+
+      // 删除服务器的图片
+      let dataPic = {
+        urlpath: this.cards.imgUrl,
+      };
+      deletePhotoApi(dataPic).then((res) => {
         // console.log(res);
       });
     },

@@ -27,3 +27,6 @@ export const likeCountApi = (data) => service.post("/likecount", data);
 
 //删除留言
 export const deleteWallApi = (data) => service.post("/deletewall", data);
+
+// 删除相关图片或者视频资源。
+export const deletePhotoApi = (data) => service.post("/deletephoto", data);
