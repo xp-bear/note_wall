@@ -13,7 +13,7 @@
     <!-- 留言墙与照片墙的卡片切换  -->
     <!-- 留言墙卡片 -->
     <div class="card" :style="{ width: nwidth + 'px' }" v-show="id == 0">
-      <NoteCard v-for="(item, index) in note" :key="index" :note="item" class="card-inner" :width="'288px'" :class="{ cardSelected: index == cardSelected }" @toDetail="selectCad(index)"></NoteCard>
+      <NoteCard v-for="(item, index) in cards" :key="index" :note="item" class="card-inner" :width="'288px'" :class="{ cardSelected: index == cardSelected }" @toDetail="selectCad(index)"></NoteCard>
     </div>
     <!-- 照片墙图片 -->
     <div class="photo" v-show="id == 1">
@@ -59,7 +59,7 @@ import PhotoView from "@/components/PhotoView.vue";
 // import { photos } from "../../mock/index";
 import lottie from "lottie-web";
 import loadingJson from "@/assets/images/loading.json";
-import { findWallPageApi } from "@/api/index";
+import { findWallPageApi, likeCountApi } from "@/api/index";
 export default {
   name: "WallMessage",
   data() {
@@ -127,6 +127,29 @@ export default {
         }
         this.pic_page = picPage;
         this.getPhotoCard(newVal);
+      }
+
+      // 传数据
+      if (newVal != oldVal) {
+        this.cards.forEach((item) => {
+          // 判断是否点击过照片墙与视频墙切换，显示爱心bug修复。
+          let likeData = {
+            wid: item.id, //当前卡片的id
+            uid: this.$store.state.user.id, //当前登录的ip用户 150.12.16.18
+          };
+          // 判断当前ip地址有没有点击过爱心
+          likeCountApi(likeData).then((res) => {
+            // console.log(res.message[0].count, item); //是否点击过爱心
+            // console.log(res, likeData); //是否点击过爱心
+
+            if (res.message[0].count == 0) {
+              item.islike[0].count = 0;
+            } else {
+              item.islike[0].count = 1;
+            }
+          });
+        });
+        // console.log(this.cards);
       }
     },
   },
@@ -204,10 +227,12 @@ export default {
         this.addBottom = 30;
       }
       // 加载更多留言墙数据
-      if (Math.floor(scrollTop) + Math.floor(clientHeight) >= Math.floor(contentHeight) - 3) {
+      if (Math.abs(Math.floor(scrollTop) + Math.floor(clientHeight) - Math.floor(contentHeight)) < 3) {
         // console.log("开始加载数据");
-        this.getWallCard(this.id);
-        this.getPhotoCard(this.id);
+        setTimeout(() => {
+          this.getWallCard(this.id);
+          this.getPhotoCard(this.id);
+        }, 100);
       }
 
       // if (parseInt(scrollTop.toFixed(0)) + clientHeight == contentHeight) {

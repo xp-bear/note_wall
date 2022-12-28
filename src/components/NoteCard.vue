@@ -8,7 +8,7 @@
     <div class="foot">
       <div class="footer-left">
         <div class="icon" @click="clickLike">
-          <span class="iconfont icon-aixin1" :class="getIsLike()"></span>
+          <span class="iconfont icon-aixin1" :class="getIsLike()" ref="aixin"></span>
           <span class="value">{{ card.like[0].count }}</span>
         </div>
         <div class="icon" v-show="card.comcount[0].count > 0" @click="clickMessage">
@@ -37,7 +37,6 @@ export default {
     likeCountApi(likeData).then((res) => {
       // console.log(res.message[0].count, this.card); //是否点击过爱心
       // console.log(res, likeData); //是否点击过爱心
-
       if (res.message[0].count == 0) {
         this.card.islike[0].count = 0;
       } else {
@@ -48,21 +47,20 @@ export default {
   },
   updated() {
     // 判断是否点击过
-    let likeData = {
-      wid: this.card.id, //当前卡片的id
-      uid: this.$store.state.user.id, //当前登录的ip用户 150.12.16.18
-    };
-    // 判断当前ip地址有没有点击过爱心
-    likeCountApi(likeData).then((res) => {
-      // console.log(res.message[0].count, this.card); //是否点击过爱心
-      // console.log(res, likeData); //是否点击过爱心
-
-      if (res.message[0].count == 0) {
-        this.card.islike[0].count = 0;
-      } else {
-        this.card.islike[0].count = 1;
-      }
-    });
+    // let likeData = {
+    //   wid: this.card.id, //当前卡片的id
+    //   uid: this.$store.state.user.id, //当前登录的ip用户 150.12.16.18
+    // };
+    // // 判断当前ip地址有没有点击过爱心
+    // likeCountApi(likeData).then((res) => {
+    //   // console.log(res.message[0].count, this.card); //是否点击过爱心
+    //   // console.log(res, likeData); //是否点击过爱心
+    //   if (res.message[0].count == 0) {
+    //     this.card.islike[0].count = 0;
+    //   } else {
+    //     this.card.islike[0].count = 1;
+    //   }
+    // });
     // console.log(this.card);
   },
   props: {
@@ -81,6 +79,15 @@ export default {
     // 获取到id的值的改变
     id() {
       return this.$route.query.id;
+    },
+  },
+  watch: {
+    card(newVal, oldVal) {
+      // console.log(newVal, oldVal);
+      if (newVal.islike[0].count != oldVal.islike[0].count) {
+        // console.log(11);
+        this.$refs.aixin.style.color = "#f35248";
+      }
     },
   },
   methods: {
@@ -127,7 +134,7 @@ export default {
     },
     //点击评论图标。
     clickMessage() {
-      console.log(11);
+      // console.log(11);
       this.$emit("toDetail"); //显示模态框出来详细信息评论。
     },
   },
