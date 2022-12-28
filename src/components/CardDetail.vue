@@ -10,9 +10,9 @@
     <NoteCard :note="card" class="note-card"></NoteCard>
     <!-- 输入框文本域 -->
     <div class="form">
-      <textarea placeholder="请输入评论内容…" class="title-menu-min" v-model="disscuss"></textarea>
+      <textarea placeholder="请输入评论内容..." class="title-menu-min" v-model="disscuss"></textarea>
       <div class="bt">
-        <input type="text" v-model="name" />
+        <input type="text" placeholder="签名..." v-model="name" />
         <Button :class="{ notallowed: !isDis }" @click="submit">评论</Button>
       </div>
     </div>
@@ -20,8 +20,8 @@
     <p class="title">评论 {{ cards.comcount[0].count }}</p>
     <div class="comment">
       <div class="comment-li" v-for="(item, index) in comments" :key="index">
-        <div class="user-head" :style="{ backgroundImage: portrait[item.imgUrl] }"></div>
-        <!-- <div class="user-head"><img :src="rocoImg[item.imgUrl]" alt="" /></div> -->
+        <!-- <div class="user-head" :style="{ backgroundImage: portrait[item.imgUrl] }"></div> -->
+        <div class="user-head"><img :src="avatarImg[item.imgUrl]" alt="" /></div>
         <div class="comment-m">
           <div class="m-top">
             <p class="name">{{ item.name }}</p>
@@ -39,7 +39,7 @@
 import NoteCard from "@/components/NoteCard.vue";
 import Button from "@/components/Button.vue";
 // import { comments } from "../../mock/index";
-import { portrait, rocoImg } from "@/utils/data";
+import { portrait, rocoImg, avatarImg } from "@/utils/data";
 import { dateOne } from "@/utils/time_format";
 import { insertCommentApi, findCommentPageApi, deleteWallApi } from "@/api/index";
 export default {
@@ -49,8 +49,9 @@ export default {
       comments: [], //评论数组
       portrait, //背景头像 []
       rocoImg, //洛克头像背景
+      avatarImg, //动漫人物头像背景
       disscuss: "", //输入的内容,
-      name: "匿名", //评论姓名
+      name: "", //评论姓名
       // isDis: true, //按钮不可以点击,
       page: 1, //当前页
       pageSize: 10, //一页多少条评论
@@ -81,6 +82,7 @@ export default {
         });
         // 清空评论框
         this.disscuss = "";
+        this.name = "";
         // this.$message({ type: "success", message: "发送成功!" });
       }
     },
@@ -156,7 +158,7 @@ export default {
   },
   computed: {
     isDis() {
-      if (this.disscuss.length > 0) {
+      if (this.disscuss.length > 0 && this.name.length > 0) {
         return true;
       } else {
         return false;
@@ -270,6 +272,7 @@ export default {
         align-items: center;
         img {
           width: 28px;
+          border-radius: 50%;
         }
       }
       .comment-m {

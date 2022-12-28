@@ -1,7 +1,7 @@
 <template>
   <div class="wall-message">
     <!-- 主页面板 -->
-    <p class="title" >{{ wallType[id].name }}</p>
+    <p class="title">{{ wallType[id].name }}</p>
     <p class="slogan">{{ wallType[id].slogan }}</p>
     <div class="label">
       <p class="label-list" :class="{ label_selected: nlabel == -1 }" @click="selectNode(-1)">全部</p>
@@ -195,7 +195,7 @@ export default {
       let clientHeight = document.documentElement.clientHeight;
       //内容高度
       let contentHeight = document.documentElement.scrollHeight;
-      // console.log("距离顶部的高度: ", Math.floor(scrollTop), "可视化区域高度: ", Math.floor(clientHeight), "内容高度: ", Math.floor(contentHeight));
+      console.log("距离顶部的高度: ", Math.floor(scrollTop), "可视化区域高度: ", Math.floor(clientHeight), "内容高度: ", Math.floor(contentHeight));
 
       //做判断,代表我已经滚动到了底部footer与内容之间的距离
       if (scrollTop + clientHeight + 200 >= contentHeight) {
@@ -204,7 +204,7 @@ export default {
         this.addBottom = 30;
       }
       // 加载更多留言墙数据
-      if (Math.floor(scrollTop) + Math.floor(clientHeight) >= Math.floor(contentHeight)) {
+      if (Math.floor(scrollTop) + Math.floor(clientHeight) >= Math.floor(contentHeight) - 3) {
         // console.log("开始加载数据");
         this.getWallCard(this.id);
         this.getPhotoCard(this.id);

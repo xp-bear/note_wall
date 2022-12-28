@@ -27,6 +27,25 @@ import { dateOne } from "@/utils/time_format";
 import { insertFeedBackApi, likeCountApi } from "@/api/index";
 export default {
   name: "NoteCard",
+  created() {
+    // 判断是否点击过
+    let likeData = {
+      wid: this.card.id, //当前卡片的id
+      uid: this.$store.state.user.id, //当前登录的ip用户 150.12.16.18
+    };
+    // 判断当前ip地址有没有点击过爱心
+    likeCountApi(likeData).then((res) => {
+      // console.log(res.message[0].count, this.card); //是否点击过爱心
+      // console.log(res, likeData); //是否点击过爱心
+
+      if (res.message[0].count == 0) {
+        this.card.islike[0].count = 0;
+      } else {
+        this.card.islike[0].count = 1;
+      }
+    });
+    // console.log(this.card);
+  },
   props: {
     width: {
       default: "100%",
@@ -92,25 +111,6 @@ export default {
       console.log(11);
       this.$emit("toDetail"); //显示模态框出来详细信息评论。
     },
-  },
-  created() {
-    // 判断是否点击过
-    let likeData = {
-      wid: this.card.id, //当前卡片的id
-      uid: this.$store.state.user.id, //当前登录的ip用户 150.12.16.18
-    };
-    // 判断当前ip地址有没有点击过爱心
-    likeCountApi(likeData).then((res) => {
-      // console.log(res.message[0].count, this.card); //是否点击过爱心
-      // console.log(res, likeData); //是否点击过爱心
-
-      if (res.message[0].count == 0) {
-        this.card.islike[0].count = 0;
-      } else {
-        this.card.islike[0].count = 1;
-      }
-    });
-    // console.log(this.card);
   },
   data() {
     return {

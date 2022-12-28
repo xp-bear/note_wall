@@ -76,7 +76,22 @@ export const rocoImg = [
   "http://cdn.xxoutman.cn/roco/20.png",
   "http://cdn.xxoutman.cn/roco/21.png",
 ];
-
+export const avatarImg = [
+  "http://cdn.xxoutman.cn/avatar/1.jpg",
+  "http://cdn.xxoutman.cn/avatar/2.jpg",
+  "http://cdn.xxoutman.cn/avatar/3.jpg",
+  "http://cdn.xxoutman.cn/avatar/4.jpg",
+  "http://cdn.xxoutman.cn/avatar/5.jpg",
+  "http://cdn.xxoutman.cn/avatar/6.jpg",
+  "http://cdn.xxoutman.cn/avatar/7.jpg",
+  "http://cdn.xxoutman.cn/avatar/8.jpg",
+  "http://cdn.xxoutman.cn/avatar/9.jpg",
+  "http://cdn.xxoutman.cn/avatar/10.jpg",
+  "http://cdn.xxoutman.cn/avatar/11.jpg",
+  "http://cdn.xxoutman.cn/avatar/12.jpg",
+  "http://cdn.xxoutman.cn/avatar/13.jpg",
+  "http://cdn.xxoutman.cn/avatar/14.jpg",
+];
 // 照片墙或者留言墙为空的时候,加载的空状态
 export const none = [
   {
