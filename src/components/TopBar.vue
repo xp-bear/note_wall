@@ -29,6 +29,8 @@ export default {
   },
   methods: {
     changeWall(index) {
+      // 重置浏览器滚动条为零。
+      // document.documentElement.scrollTop = 0;
       this.$router.push({
         query: { id: index },
       });

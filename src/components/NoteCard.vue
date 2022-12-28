@@ -11,7 +11,7 @@
           <span class="iconfont icon-aixin1" :class="getIsLike()"></span>
           <span class="value">{{ card.like[0].count }}</span>
         </div>
-        <div class="icon" v-show="card.comcount[0].count > 0">
+        <div class="icon" v-show="card.comcount[0].count > 0" @click="clickMessage">
           <span class="iconfont icon-liuyan"></span>
           <span class="value">{{ card.comcount[0].count }}</span>
         </div>
@@ -86,6 +86,11 @@ export default {
           this.card.islike[0].count = 1;
         }
       });
+    },
+    //点击评论图标。
+    clickMessage() {
+      console.log(11);
+      this.$emit("toDetail"); //显示模态框出来详细信息评论。
     },
   },
   created() {

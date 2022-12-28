@@ -31,7 +31,7 @@ export default {
   },
   methods: {
     ckPhoto() {
-      console.log(this.photo);
+      // console.log(this.photo);
       // 判断是否点击过
       let likeData = {
         wid: this.photo.id, //当前卡片的id
@@ -40,7 +40,7 @@ export default {
       // 判断当前ip地址有没有点击过爱心
       likeCountApi(likeData).then((res) => {
         // console.log(res.message[0].count, this.card); //是否点击过爱心
-        console.log(res, likeData); //是否点击过爱心
+        // console.log(res, likeData); //是否点击过爱心
 
         if (res.message[0].count == 0) {
           let data = {

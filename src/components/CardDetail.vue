@@ -2,7 +2,7 @@
   <div class="CardDetail">
     <div class="top-bt">
       <p class="revoke" @click="informAdmin">联系墙主撕掉该便签</p>
-      <p class="report" v-show="idDeleteBool == 0">举报</p>
+      <p class="report" v-show="idDeleteBool == 0" @click="toReport">举报</p>
       <p class="report" v-show="idDeleteBool == 1" @click="toDeleteWall">删除留言</p>
       <p class="report" v-show="idDeleteBool == 2" @click="toDeletePhoto">删除照片</p>
     </div>
@@ -131,6 +131,10 @@ export default {
       deleteWallApi(data).then((res) => {
         // console.log(res);
       });
+    },
+    // 点击举报按钮。
+    toReport() {
+      this.$message({ type: "success", message: "举报信息已通知墙主!" });
     },
     //联系墙主删除便签。
     informAdmin() {

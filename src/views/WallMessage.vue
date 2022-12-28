@@ -1,7 +1,7 @@
 <template>
   <div class="wall-message">
     <!-- 主页面板 -->
-    <p class="title">{{ wallType[id].name }}</p>
+    <p class="title" >{{ wallType[id].name }}</p>
     <p class="slogan">{{ wallType[id].slogan }}</p>
     <div class="label">
       <p class="label-list" :class="{ label_selected: nlabel == -1 }" @click="selectNode(-1)">全部</p>
@@ -134,6 +134,10 @@ export default {
     this.noteWidth();
     //监听屏幕宽度变化
     window.addEventListener("resize", this.noteWidth);
+    // 初始状态，先把滚动条置为零。
+    if (history.scrollRestoration) {
+      history.scrollRestoration = "manual";
+    }
     //监听高度滚动
     window.addEventListener("scroll", this.scrollBottom);
     // 鼠标悬停按钮添加id 做动画
@@ -191,6 +195,7 @@ export default {
       let clientHeight = document.documentElement.clientHeight;
       //内容高度
       let contentHeight = document.documentElement.scrollHeight;
+      // console.log("距离顶部的高度: ", Math.floor(scrollTop), "可视化区域高度: ", Math.floor(clientHeight), "内容高度: ", Math.floor(contentHeight));
 
       //做判断,代表我已经滚动到了底部footer与内容之间的距离
       if (scrollTop + clientHeight + 200 >= contentHeight) {
@@ -199,11 +204,16 @@ export default {
         this.addBottom = 30;
       }
       // 加载更多留言墙数据
-      // console.log(scrollTop.toFixed(0), clientHeight, contentHeight);
-      if (parseInt(scrollTop.toFixed(0)) + clientHeight == contentHeight) {
+      if (Math.floor(scrollTop) + Math.floor(clientHeight) >= Math.floor(contentHeight)) {
+        // console.log("开始加载数据");
         this.getWallCard(this.id);
         this.getPhotoCard(this.id);
       }
+
+      // if (parseInt(scrollTop.toFixed(0)) + clientHeight == contentHeight) {
+      //   this.getWallCard(this.id);
+      //   this.getPhotoCard(this.id);
+      // }
     },
 
     //弹窗的显示与隐藏
@@ -480,11 +490,14 @@ export default {
   .slogan {
     color: @gray-2;
     text-align: center;
+    font-family: xp;
+    font-size: 16px;
   }
   .label {
     display: flex;
     justify-content: center;
     margin-top: 40px;
+    font-weight: 700;
     cursor: pointer;
     .label-list {
       padding: 0 14px;

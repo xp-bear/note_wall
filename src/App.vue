@@ -103,14 +103,14 @@ export default {
 }
 #shade {
   font-weight: 900;
-  font-size: 16px;
+  // font-size: 16px;
   color: black;
-  background: -webkit-linear-gradient(right, #70f7fe, #fbd7c6, #fdefac, #bfb5dd, #bed5f5, #70f7fe);
+  background: -webkit-linear-gradient(right, #70f7fe, #b44918, #928028, #37198f, #b4b418, #70f7fe);
   color: transparent;
   /*设置字体颜色透明*/
   -webkit-background-clip: text;
   /*背景裁剪为文本形式*/
-  animation: ran 30s linear infinite;
+  animation: ran 10s linear infinite;
   /*动态10s展示*/
 }
 @keyframes ran {
