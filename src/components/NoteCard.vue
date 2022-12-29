@@ -46,7 +46,7 @@ export default {
     // console.log(this.card);
   },
   updated() {
-    // 判断是否点击过
+    // // 判断是否点击过
     // let likeData = {
     //   wid: this.card.id, //当前卡片的id
     //   uid: this.$store.state.user.id, //当前登录的ip用户 150.12.16.18
@@ -82,13 +82,30 @@ export default {
     },
   },
   watch: {
-    card(newVal, oldVal) {
-      if (newVal.islike[0].count == 1) {
-        // this.$refs.aixin.classList.add("isLike");
-        this.$refs.aixin.style.color = "#f35248";
-      } else if (newVal.islike[0].count == 0) {
-        this.$refs.aixin.style.color = "";
-      }
+    card: {
+      handler(newVal, oldVal) {
+        // console.log("新值: ", newVal, "老值: ", oldVal);
+        if (newVal.islike[0].count != oldVal.islike[0].count) {
+          // 判断是否点击过
+          let likeData = {
+            wid: this.card.id, //当前卡片的id
+            uid: this.$store.state.user.id, //当前登录的ip用户 150.12.16.18
+          };
+          // 判断当前ip地址有没有点击过爱心
+          likeCountApi(likeData).then((res) => {
+            // console.log(res.message[0].count, this.card); //是否点击过爱心
+            // console.log(res, likeData); //是否点击过爱心
+            if (res.message[0].count == 0) {
+              this.card.islike[0].count = 0;
+              this.$refs.aixin.classList.remove("isLike");
+            } else {
+              this.card.islike[0].count = 1;
+              this.$refs.aixin.classList.add("isLike");
+            }
+          });
+        }
+      },
+      deep: true,
     },
   },
   methods: {
