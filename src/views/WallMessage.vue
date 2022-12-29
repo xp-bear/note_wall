@@ -231,8 +231,8 @@ export default {
         // console.log("开始加载数据");
         setTimeout(() => {
           this.getWallCard(this.id);
-          this.getPhotoCard(this.id);
         }, 100);
+        this.getPhotoCard(this.id);
       }
 
       // if (parseInt(scrollTop.toFixed(0)) + clientHeight == contentHeight) {
@@ -432,7 +432,7 @@ export default {
             } else {
               this.pic_page = 0; //数据加载完了,到底部了
             }
-
+            // console.log("页码: ", this.pic_page);
             //状态逻辑判断
             if (this.photos.length > 0) {
               this.isOk = 1;
