@@ -20,8 +20,8 @@
     <p class="title">评论 {{ cards.comcount[0].count }}</p>
     <div class="comment">
       <div class="comment-li" v-for="(item, index) in comments" :key="index">
-        <!-- <div class="user-head" :style="{ backgroundImage: portrait[item.imgUrl] }"></div> -->
-        <div class="user-head"><img :src="avatarImg[item.imgUrl]" alt="" /></div>
+        <div class="user-head" :style="{ backgroundImage: portrait[item.imgUrl], boxShadow: '0 0 3px #ccc' }"></div>
+        <!-- <div class="user-head"><img :src="avatarImg[item.imgUrl]" alt="" /></div> -->
         <div class="comment-m">
           <div class="m-top">
             <p class="name">{{ item.name }}</p>
