@@ -1,6 +1,6 @@
 <template>
   <div class="PhotoCard">
-    <video v-if="this.photo.imgUrl.includes('.mp4')" :src="photo.imgUrl" autoplay muted loop class="photo-img"></video>
+    <video v-if="this.photo.imgUrl.includes('.mp4')" :src="photo.imgUrl" muted loop class="photo-img" poster=""></video>
     <img v-else :src="photo.imgUrl" alt="" class="photo-img" />
 
     <div class="photo-bg"></div>
