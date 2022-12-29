@@ -84,9 +84,10 @@ export default {
   watch: {
     card(newVal, oldVal) {
       if (newVal.islike[0].count == 1) {
-        this.$refs.aixin.classList.add("isLike");
-      } else {
-        this.$refs.aixin.classList.remove("isLike");
+        // this.$refs.aixin.classList.add("isLike");
+        this.$refs.aixin.style.color = "#f35248";
+      } else if (newVal.islike[0].count == 0) {
+        this.$refs.aixin.style.color = "";
       }
     },
   },
