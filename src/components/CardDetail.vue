@@ -309,6 +309,7 @@ export default {
           line-height: 22px;
           font-weight: 400;
           overflow: auto;
+          white-space: pre-wrap;
         }
       }
     }
