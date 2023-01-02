@@ -1,24 +1,17 @@
-# web
+# 留言墙的开发。
 
-## Project setup
-```
-npm install
-```
+**项目截图**
+![](http://cdn.xxoutman.cn/20230103001200.png)
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+![](http://cdn.xxoutman.cn/20230103001249.png)
 
-### Compiles and minifies for production
-```
-npm run build
-```
+**使用的技术**
 
-### Lints and fixes files
-```
-npm run lint
-```
+> vue3
+> node.js
+> express
+> mysql
+> less
+> webpack
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+项目地址: http://note.xxoutman.cn/
