@@ -263,7 +263,7 @@ export default {
     selectCad(index) {
       // console.log(this.note[index].userId, this.$store.state.user.id);// 取出对应的卡片数据
       if (this.id == 0) {
-        if (this.note[index].userId == this.$store.state.user.id) {
+        if (this.note[index].userId == this.$store.state.user.id || this.$route.query.user == "admin") {
           // 是自己的卡片
           this.idDeleteObj.isDelete = 1;
           this.idDeleteObj.DeleteIndex = index;
@@ -274,7 +274,7 @@ export default {
       } else {
         // 照片墙
         // console.log(this.photos, this.$store.state.user.id);
-        if (this.photos[index].userId == this.$store.state.user.id) {
+        if (this.photos[index].userId == this.$store.state.user.id || this.$route.query.user == "admin") {
           // 是自己的卡片
           this.idDeleteObj.isDelete = 2; //删除照片
           this.idDeleteObj.DeleteIndex = index;
